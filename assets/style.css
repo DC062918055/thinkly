@@ -1,0 +1,62 @@
+body {
+    background-image: url('background.svg');
+    background-size: cover;
+}
+.content {
+    position: absolute;
+    width: 1000px;
+    height: 400px;
+    z-index: 15;
+    top: 50%;
+    left: 50%;
+    margin: -200px 0 0 -500px;
+}
+#contentDisplay {
+    background-color: #FF6600;
+    opacity: 0.8;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    border: 0px solid #000000;
+    padding: 20px;
+}
+#contentBox {
+    background-color: transparent;
+    width: 900px;
+    height: 350px;
+    margin: -175px 0 0 -450px;
+}
+.logo {
+    width: 10%;
+}
+h1 {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+}
+h2 {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+}
+p {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
+}
+span {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    font-weight: 700;
+}
+hr {
+    border: 1px solid #FFFFFF;
+}
+a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#loginlink {
+    font-family: 'Noto Sans';
+    float: right;
+}
