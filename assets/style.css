@@ -73,12 +73,12 @@ a:hover {
 }
 .loginField {
 	background-color: transparent;
-	width: 200px;
+	width: 300px;
 	border: 1px solid #FFFFFF;
 	font-family: 'Noto Sans';
 	text-align: center;
 	color: #FFFFFF;
-	font-size: 0.8em;
+	font-size: 1em;
 }
 .loginField::-webkit-input-placeholder {
 	color: #FFFFFF;
@@ -98,7 +98,7 @@ a:hover {
 	font-family: 'Noto Sans';
 	text-align: center;
 	color: #FFFFFF;
-	font-size: 0.8em;
+	font-size: 1em;
 }
 form {
     text-align: center;

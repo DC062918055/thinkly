@@ -7,10 +7,10 @@
     if($conn->connect_error) {
         die();
     }
-    //$query="CREATE TABLE users (id BIGINT NOT NULL AUTO_INCREMENT, username VARCHAR(16), password VARCHAR(255), forename VARCHAR(255), surname VARCHAR(255), email VARCHAR(254))";
     $query="DESCRIBE members";
     $result=$conn->query($query);
     while($row=$result->fetch_assoc()) {
-        echo "{$row['Field']} - {$row['Type']}\n";
+        print_r($row);
     }
+    //$query="CREATE TABLE users (id BIGINT NOT NULL AUTO_INCREMENT, username VARCHAR(16), password VARCHAR(255), forename VARCHAR(255), surname VARCHAR(255), email VARCHAR(254))";
 ?>

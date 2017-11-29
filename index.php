@@ -9,29 +9,29 @@
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
     echo "</head>";
     echo "<body>";
-    //echo "<img class='logo' src='assets/logo.svg'>";
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
     $page=$_GET["page"];
     if($page=="login") {
         echo "<div class='column1'>";
         echo "<h1>Login to thinkly.</h1>";
-        echo "<p>Already a member? Login using your details below.</p>";
+        echo "<p>Already a member? Welcome back! Login below.</p>";
         echo "<form action='assets/scripts/login.php' method='post' enctype='multipart/form-data'><input class='loginField' type='text' name='username' placeholder='Username' autofocus><br><div class='space'></div><input class='loginField' type='password' name='password' placeholder='Password'><br>";
-        //if($_SESSION["incorrect']) {
+        if($_SESSION["incorrect"]) {
             echo "<p>Incorrect username or password.</p>";
-        //}
-        //else if($_SESSION["blank"]) {
+        }
+        else if($_SESSION["blank"]) {
             echo "<p>Please enter your login details.</p>";
-        //}
-        //else {
+        }
+        else {
             echo "<div class='space'></div>";
-        //}
+        }
         echo "<input class='loginButton' type='submit' value='Login'></form>";
         echo "</div>";
         echo "<div class='column2'>";
         echo "<h1>Register for thinkly.</h1>";
-        echo "<p>Not yet a member? Enter your details below to sign up.</p>";
+        echo "<p>Not yet a member? Welcome! Sign up below.</p>";
+        echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
         echo "</div>";
     }
     else {
