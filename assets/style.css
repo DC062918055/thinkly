@@ -11,6 +11,17 @@ body {
     left: 50%;
     margin: -200px 0 0 -500px;
 }
+.column1 {
+    float: left;
+    width: 450px;
+}
+.column2 {
+    float: right;
+    width: 450px;
+}
+.space {
+    height: 5px;
+}
 #contentDisplay {
     background-color: #FF6600;
     opacity: 0.8;
@@ -59,4 +70,36 @@ a:hover {
 #loginlink {
     font-family: 'Noto Sans';
     float: right;
+}
+.loginField {
+	background-color: transparent;
+	width: 200px;
+	border: 1px solid #FFFFFF;
+	font-family: 'Noto Sans';
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 0.8em;
+}
+.loginField::-webkit-input-placeholder {
+	color: #FFFFFF;
+}
+.loginField::-moz-placeholder {
+	color: #FFFFFF;
+}
+.loginField:-ms-input-placeholder {
+	color: #FFFFFF;
+}
+.loginField:-moz-placeholder {
+	color: #FFFFFF;
+}
+.loginButton {
+	background-color: transparent;
+	border: 1px solid #FFFFFF;
+	font-family: 'Noto Sans';
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 0.8em;
+}
+form {
+    text-align: center;
 }
