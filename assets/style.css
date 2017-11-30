@@ -47,6 +47,7 @@ h1 {
 h2 {
     font-family: 'Noto Serif';
     color: #FFFFFF;
+    margin: 0;
 }
 p {
     font-family: 'Noto Sans';
@@ -56,6 +57,7 @@ span {
     font-family: 'Noto Serif';
     color: #FFFFFF;
     font-weight: 700;
+    float: left;
 }
 hr {
     border: 1px solid #FFFFFF;
@@ -102,4 +104,11 @@ a:hover {
 }
 form {
     text-align: center;
+}
+ul {
+    list-style-property: circle;
+}
+li {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
 }
