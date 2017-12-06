@@ -20,10 +20,10 @@ body {
     width: 450px;
 }
 .space {
-    height: 5px;
+    height: 8px;
 }
 #contentDisplay {
-    background-color: #FF6600;
+    background-color: #008FB3;
     opacity: 0.8;
     border-radius: 25px;
     -moz-border-radius: 25px;
@@ -47,6 +47,7 @@ h1 {
 h2 {
     font-family: 'Noto Serif';
     color: #FFFFFF;
+    margin: 0;
 }
 p {
     font-family: 'Noto Sans';
@@ -102,4 +103,11 @@ a:hover {
 }
 form {
     text-align: center;
+}
+ul {
+    list-style-property: circle;
+}
+li {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
 }
