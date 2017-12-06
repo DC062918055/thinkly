@@ -7,6 +7,7 @@
     echo "<link href='https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif' rel='stylesheet' />";
     echo "<link rel='icon' type='image/png' href='assets/favicon.png' />";
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
+    echo "<script type='text/javascript' src='assets/scripts/register.js'></script>";
     echo "</head>";
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
@@ -32,7 +33,7 @@
             echo "<div class='column2'>";
             echo "<h1>Register for thinkly.</h1>";
             echo "<p>Not yet a member? Welcome! Sign up below.</p>";
-            echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
+            echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
             echo "</div>";
         }
         else {
@@ -50,7 +51,6 @@
         if($page=="home") {
             echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
             $date=date('Y/m/d H:i:s');
-            
         }
         else {
             header("Location: /thinkly/?page=home");
