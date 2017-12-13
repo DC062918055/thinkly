@@ -1,19 +1,27 @@
 <?php
+    //begin session
     session_start();
+    //start HTML printout
     echo "<!DOCTYPE html>";
     echo "<html>";
     echo "<head>";
+    //set title in browser navigation bar
     echo "<title>thinkly</title>";
+    //import fonts from Google, Noto Sans and Serif
     echo "<link href='https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif' rel='stylesheet' />";
+    //place the favicon in the navigation bar
     echo "<link rel='icon' type='image/png' href='assets/favicon.png' />";
+    //import stylesheet
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
-    echo "<script type='text/javascript' src='assets/scripts/register.js'></script>";
     echo "</head>";
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
-    $page=$_GET["page"];
+    //get page to direct user
+    $page=strip_tags($_GET["page"]);
+    //see if user has logged in
     if($_SESSION["userId"]=="") {
+        //if not, allow access to only non-registration pages
         if($page=="login") {
             echo "<div class='column1'>";
             echo "<h1>Login to thinkly.</h1>";
@@ -32,6 +40,8 @@
             echo "</div>";
             echo "<div class='column2'>";
             echo "<h1>Register for thinkly.</h1>";
+            //import registration validation script
+            echo "<script type='text/javascript' src='assets/scripts/register.js'></script>";
             echo "<p>Not yet a member? Welcome! Sign up below.</p>";
             echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
             echo "</div>";
@@ -43,6 +53,7 @@
         }
     }
     else {
+        //otherwise, allow access to pages requiring registration
         if($page=="welcome") {
             echo "<h1>Welcome to thinkly!</h1>";
             echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li>create your profile</li><li>find a page</li><li>create a page</li><li>find a group</li><li>create a group</li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
