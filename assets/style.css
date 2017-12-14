@@ -20,7 +20,7 @@ body {
     width: 450px;
 }
 .space {
-    height: 8px;
+    height: 6px;
 }
 #contentDisplay {
     background-color: #008FB3;
@@ -57,6 +57,11 @@ span {
     font-family: 'Noto Serif';
     color: #FFFFFF;
     font-weight: 700;
+}
+.registerError {
+    font-family: 'Noto Sans';
+    font-weight: 400;
+    font-size: 0.6em;
 }
 hr {
     border: 1px solid #FFFFFF;
