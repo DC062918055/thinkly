@@ -1,6 +1,14 @@
 <?php
     //begin session
     session_start();
+    //get user being searched
+    $user=strip_tags($_GET["u"]);
+    //check user has been entered
+    if($user=="") {
+        //redirect the user
+        header("Location: /thinkly/?page=home");
+        die();
+    }
     //start HTML printout
     echo "<!DOCTYPE html>";
     echo "<html>";
@@ -10,29 +18,21 @@
     //import fonts from Google, Noto Sans and Serif
     echo "<link href='https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif' rel='stylesheet' />";
     //place the favicon in the navigation bar
-    echo "<link rel='icon' type='image/png' href='assets/favicon.png' />";
+    echo "<link rel='icon' type='image/png' href='/thinkly/assets/favicon.png' />";
     //import stylesheet
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
     echo "</head>";
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
-    //get user being searched
-    $user=strip_tags($_GET["u"]);
-    //check user has been entered
-    if($user=="") {
-        //redirect the user
-        header("Location: /thinkly/");
-        die();
-    }
     //connect to MySQL database
     include "/thinkly/assets/scripts/connect.php";
     //find username
-    $query="SELECT * FROM members WHERE username=''".$user."''";
+    $query="SELECT * FROM members WHERE username='".$user."'";
     $result=$conn->query($query);
     if(!$result) {
         //inform the user that user does not exist
-        echo "<h1>Oops. We can't seem to find who you're looking for.</h1>";
+        echo "<h2>Oops. We can't seem to find who you're looking for.</h2>";
         echo "<p>The user may have deleted their account, or we might not have a user under that name.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
     }
     //otherwise, fetch user's id
