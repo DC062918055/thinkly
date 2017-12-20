@@ -60,6 +60,19 @@
         if($page=="home") {
             echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
             $date=date('Y/m/d H:i:s');
+            $time=substr($date,11,2);
+            if($time>4&&$time<12) {
+                echo "<h2>Good morning!</h2>";
+            }
+            else if($time>11&&$time<18) {
+                echo "<h2>Good afternoon!</h2>";
+            }
+            else if($time>17&&$time<10) {
+                echo "<h2>Good evening!</h2>";
+            }
+            else {
+                echo "<h2>Good night!</h2>";
+            }
         }
         else {
             header("Location: /thinkly/?page=home");
