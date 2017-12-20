@@ -81,7 +81,7 @@
             echo "<h3>Take a look at what you missed...</h3>";
             echo "</div>";
             echo "<div class='column2'>";
-            echo "<h3>...or pick up where you left off.</h3>";
+            echo "<h3>...or discover some more.</h3>";
             echo "</div>";
         }
         else {
