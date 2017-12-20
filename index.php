@@ -70,12 +70,19 @@
             else if($time>11&&$time<18) {
                 echo "<h2>Good afternoon!</h2>";
             }
-            else if($time>17&&$time<10) {
+            else if($time>17&&$time<22) {
                 echo "<h2>Good evening!</h2>";
             }
             else {
                 echo "<h2>Good night!</h2>";
             }
+            //present newsfeed
+            echo "<div class='column1'>";
+            echo "<h3>Take a look at what you missed...</h3>";
+            echo "</div>";
+            echo "<div class='column2'>";
+            echo "<h3>...or pick up where you left off.</h3>";
+            echo "</div>";
         }
         else {
             header("Location: /thinkly/?page=home");
