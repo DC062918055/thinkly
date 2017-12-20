@@ -59,8 +59,11 @@
         }
         if($page=="home") {
             echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+            //fetch local time
             $date=date('Y/m/d H:i:s');
+            //get hour
             $time=substr($date,11,2);
+            //check what time of day it is, then display appropriate message
             if($time>4&&$time<12) {
                 echo "<h2>Good morning!</h2>";
             }
