@@ -24,13 +24,16 @@ div::-webkit-scrollbar-thumb {
 }
 .column1 {
     float: left;
-    width: 450px;
-    height: 300px;
-    overflow-y: auto;
+    width: 440px;
 }
 .column2 {
     float: right;
+    width: 440px;
+}
+.newsfeed {
     width: 450px;
+    height: 300px;
+    overflow-y: auto;
 }
 .space {
     height: 6px;

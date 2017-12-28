@@ -79,6 +79,7 @@
             //present newsfeed
             echo "<div class='column1'>";
             echo "<h3>Take a look at what you missed...</h3>";
+            echo "<div class='newsfeed'>";
             //different post formats, to be merged later
             //simple text post
             echo "<hr>";
@@ -95,17 +96,29 @@
             $page="Scotland";
             $slug="/prismpad/assets/background3.jpg";
             echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<img src='$slug' class='postimage'>";
+            echo "<p class='posttext'>$content</p><img src='$slug' class='postimage'>";
             echo "</div>";
-            echo "<div class='post'>";
-            $username="Duncan";
-            $page="Blur";
-            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<p class='posttext'>$content</p>";
             echo "</div>";
             echo "</div>";
             echo "<div class='column2'>";
             echo "<h3>...or discover some more.</h3>";
+            echo "<div class='newsfeed'>";
+            echo "<hr>";
+            echo "<div class='post'>";
+            //music post
+            $username="Duncan";
+            $page="Blur";
+            $uri="spotify:track:5ACPXwE34GmPhHAuUHEycE";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p><iframe src='https://open.spotify.com/embed?uri=$uri' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+            echo "</div>";
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="thinkly";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p>";
+            echo "</div>";
+            echo "</div>";
             echo "</div>";
         }
         else {

@@ -57,11 +57,21 @@
     //see if user has logged in
     if($_SESSION["userId"]=="") {
         //if not, display only basic information
-        echo "<h1>$name on thinkly</h1>";
+        echo "<h1>$name on thinkly.</h1>";
         echo "<h2>$user</h2>";
-        echo "<p>$bio</p>";
+        echo "<p>$bio<br>$website</p>";
         //prompt user to register
-        echo "<p>To connect with and see $name's posts, <a href='/thinkly/?page=login'>join thinkly</a>.</p>";
+        echo "<span>To connect with and see $name's posts, <a href='/thinkly/?page=login'>join thinkly</a>.</span>";
+    }
+    else {
+        //if so, show user full details
+        echo "<h1>$name on thinkly.</h1>";
+        echo "<h2>$user</h2>";
+        echo "<p>$bio<br>$website</p>";
+        include "/thinkly/assets/functions.php";
+        $day=getDay(substr($birthday,8,2));
+        $month=getMonth(substr($birthday,5,2));
+        echo "<p>Born on $day $month.</p>";
     }
     echo "</div>";
     echo "</body>";

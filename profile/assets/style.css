@@ -13,11 +13,11 @@ body {
 }
 .column1 {
     float: left;
-    width: 450px;
+    width: 440px;
 }
 .column2 {
     float: right;
-    width: 450px;
+    width: 440px;
 }
 #contentDisplay {
     background-color: #008FB3;
