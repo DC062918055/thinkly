@@ -79,6 +79,30 @@
             //present newsfeed
             echo "<div class='column1'>";
             echo "<h3>Take a look at what you missed...</h3>";
+            //different post formats, to be merged later
+            //simple text post
+            echo "<hr>";
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Quantum Physics";
+            $content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent maximus ante a congue semper. Nam sit amet arcu ante. Sed vel dictum tortor. Ut at nunc posuere, accumsan lacus et, porttitor dolor. Pellentesque habitant morbi tristique senectus sed.";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p>";
+            echo "</div>";
+            //image post
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Scotland";
+            $slug="/prismpad/assets/background3.jpg";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<img src='$slug' class='postimage'>";
+            echo "</div>";
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Blur";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p>";
+            echo "</div>";
             echo "</div>";
             echo "<div class='column2'>";
             echo "<h3>...or discover some more.</h3>";
