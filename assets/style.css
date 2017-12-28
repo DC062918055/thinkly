@@ -2,6 +2,17 @@ body {
     background-image: url('background.svg');
     background-size: cover;
 }
+div::-webkit-scrollbar {
+    width: 1em;
+}
+
+div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+div::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 0.5px solid slategrey;
+}
 .content {
     position: absolute;
     width: 1000px;
@@ -14,13 +25,19 @@ body {
 .column1 {
     float: left;
     width: 450px;
+    height: 300px;
+    overflow-y: auto;
 }
 .column2 {
     float: right;
     width: 450px;
 }
 .space {
-    height: 8px;
+    height: 6px;
+}
+.post {
+    margin: 0;
+    border-bottom: 2px solid #FFFFFF;
 }
 #contentDisplay {
     background-color: #008FB3;
@@ -36,9 +53,6 @@ body {
     height: 350px;
     margin: -175px 0 0 -450px;
 }
-.logo {
-    width: 10%;
-}
 h1 {
     font-family: 'Noto Serif';
     color: #FFFFFF;
@@ -49,14 +63,43 @@ h2 {
     color: #FFFFFF;
     margin: 0;
 }
+h3 {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
+    margin: 0;
+    font-weight: 400;
+}
+h4 {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+}
+h5 {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
+    margin: 0;
+}
 p {
     font-family: 'Noto Sans';
     color: #FFFFFF;
+}
+.posttext {
+    margin: 0;
+}
+.postimage {
+    margin: 0;
+    width: 430px;
+    border-radius: 30px;
 }
 span {
     font-family: 'Noto Serif';
     color: #FFFFFF;
     font-weight: 700;
+}
+.registerError {
+    font-family: 'Noto Sans';
+    font-weight: 400;
+    font-size: 0.6em;
 }
 hr {
     border: 1px solid #FFFFFF;

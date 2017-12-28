@@ -28,14 +28,12 @@
             echo "<p>Already a member? Welcome back! Login below.</p>";
             echo "<form action='assets/scripts/login.php' method='post' enctype='multipart/form-data'><input class='loginField' type='text' name='username' placeholder='Username' autofocus><br><div class='space'></div><input class='loginField' type='password' name='password' placeholder='Password'><br>";
             if($_SESSION["incorrect"]) {
-                echo "<p>Incorrect username or password.</p>";
+                echo "<span class='registerError'>Incorrect username or password.</span>";
             }
             else if($_SESSION["blank"]) {
-                echo "<p>Please enter your login details.</p>";
+                echo "<span class='registerError'>Please enter your login details.</span>";
             }
-            else {
-                echo "<div class='space'></div>";
-            }
+            echo "<div class='space'></div>";
             echo "<input class='loginButton' type='submit' value='Login'></form>";
             echo "</div>";
             echo "<div class='column2'>";
@@ -43,7 +41,7 @@
             //import registration validation script
             echo "<script type='text/javascript' src='assets/scripts/register.js'></script>";
             echo "<p>Not yet a member? Welcome! Sign up below.</p>";
-            echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
+            echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><br><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><br><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><br><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><br><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><br><span class='registerError' id='pWordError'></span><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><br><span class='registerError' id='cpWordError'></span><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
             echo "</div>";
         }
         else {
@@ -61,7 +59,54 @@
         }
         if($page=="home") {
             echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+            //fetch local time
             $date=date('Y/m/d H:i:s');
+            //get hour
+            $time=substr($date,11,2);
+            //check what time of day it is, then display appropriate message
+            if($time>4&&$time<12) {
+                echo "<h2>Good morning!</h2>";
+            }
+            else if($time>11&&$time<18) {
+                echo "<h2>Good afternoon!</h2>";
+            }
+            else if($time>17&&$time<22) {
+                echo "<h2>Good evening!</h2>";
+            }
+            else {
+                echo "<h2>Good night!</h2>";
+            }
+            //present newsfeed
+            echo "<div class='column1'>";
+            echo "<h3>Take a look at what you missed...</h3>";
+            //different post formats, to be merged later
+            //simple text post
+            echo "<hr>";
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Quantum Physics";
+            $content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent maximus ante a congue semper. Nam sit amet arcu ante. Sed vel dictum tortor. Ut at nunc posuere, accumsan lacus et, porttitor dolor. Pellentesque habitant morbi tristique senectus sed.";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p>";
+            echo "</div>";
+            //image post
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Scotland";
+            $slug="/prismpad/assets/background3.jpg";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<img src='$slug' class='postimage'>";
+            echo "</div>";
+            echo "<div class='post'>";
+            $username="Duncan";
+            $page="Blur";
+            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+            echo "<p class='posttext'>$content</p>";
+            echo "</div>";
+            echo "</div>";
+            echo "<div class='column2'>";
+            echo "<h3>...or discover some more.</h3>";
+            echo "</div>";
         }
         else {
             header("Location: /thinkly/?page=home");
