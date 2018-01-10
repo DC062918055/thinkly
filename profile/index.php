@@ -9,6 +9,15 @@
         header("Location: /thinkly/?page=home");
         die();
     }
+    //connect to the MySQL server
+    $address="localhost";
+    $username="login";
+    $password="N3ufNzUZW15qDDk8";
+    $name="thinkly";
+    $conn=new mysqli($address,$username,$password,$name);
+    if($conn->connect_error) {
+        die();
+    }
     //start HTML printout
     echo "<!DOCTYPE html>";
     echo "<html>";
@@ -28,32 +37,36 @@
     //connect to MySQL database
     include "/thinkly/assets/scripts/connect.php";
     //find username
-    $query="SELECT * FROM members WHERE username='".$user."'";
+    $query="SELECT id, forename, surname FROM members WHERE username='$user'";
     $result=$conn->query($query);
-    if(!$result) {
+    if($result->num_rows==0) {
         //inform the user that user does not exist
         echo "<h2>Oops. We can't seem to find who you're looking for.</h2>";
         echo "<p>The user may have deleted their account, or we might not have a user under that name.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
+        die();
     }
-    //otherwise, fetch user's id
+    //otherwise, fetch user's information
     $row=$result->fetch_assoc();
     $id=$row["id"];
-    $forename=$row["forename"]+" ";
+    $forename=$row["forename"]." ";
     $surname=$row["surname"];
     //fetch more information about user
-    $query="SELECT * FROM profile WHERE id=''".$id."''";
+    $query="SELECT * FROM profile WHERE id='$id'";
     $result=$conn->query($query);
-    $nickname="\""+$row["nickname"]+"\" ";
+    $row=$result->fetch_assoc();
+    $nickname="\"".$row["nickname"]."\" ";
     $bio=$row["bio"];
     $birthday=$row["birthday"];
     $website=$row["website"];
     //generate user's name
     if($nickname!="\"\" ") {
         //concatenate names
-        $name=$forename+$nickname+$surname;
+        $name=$forename.$nickname.$surname;
     }
-    //otherwise, exclude $nickname
-    $name=$forename+$surname;
+    else {
+        //otherwise, exclude $nickname
+        $name=$forename.$surname;
+    }
     //see if user has logged in
     if($_SESSION["userId"]=="") {
         //if not, display only basic information
@@ -67,8 +80,8 @@
         //if so, show user full details
         echo "<h1>$name on thinkly.</h1>";
         echo "<h2>$user</h2>";
-        echo "<p>$bio<br>$website</p>";
-        include "/thinkly/assets/functions.php";
+        echo "<p>$bio<br><a href='$website'>$website</a></p>";
+        //include "/thinkly/assets/functions.php";
         $day=getDay(substr($birthday,8,2));
         $month=getMonth(substr($birthday,5,2));
         echo "<p>Born on $day $month.</p>";
@@ -76,4 +89,58 @@
     echo "</div>";
     echo "</body>";
     echo "</html>";
+    function getDay($day) {
+        if($day==1||$day==21||$day==31) {
+            $date=$day."st";
+        }
+        else if($day==2||$day==22) {
+            $date=$day."nd";
+        }
+        else if($day==3||$day==23) {
+            $date=$day."rd";
+        }
+        else {
+            $date=$day."th";
+        }
+        return $date;
+    }
+    function getMonth($month) {
+        if($month==1) {
+           $date="January";
+        }
+        else if($month==2) {
+           $date="February";
+        }
+        else if($month==3) {
+           $date="March";
+        }
+        else if($month==4) {
+           $date="April";
+        }
+        else if($month==5) {
+           $date="May";
+        }
+        else if($month==6) {
+           $date="June";
+        }
+        else if($month==7) {
+           $date="July";
+        }
+        else if($month==8) {
+           $date="August";
+        }
+        else if($month==9) {
+           $date="September";
+        }
+        else if($month==10) {
+           $date="October";
+        }
+        else if($month==11) {
+           $date="November";
+        }
+        else {
+            $date="December";
+        }
+        return $date;
+    }
 ?>
