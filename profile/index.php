@@ -34,8 +34,6 @@
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
-    //connect to MySQL database
-    include "/thinkly/assets/scripts/connect.php";
     //find username
     $query="SELECT id, forename, surname FROM members WHERE username='$user'";
     $result=$conn->query($query);
@@ -45,13 +43,15 @@
         echo "<p>The user may have deleted their account, or we might not have a user under that name.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
         die();
     }
+    //update page name to represent user
+    echo "<script type='text/javascript'>document.title='$user on thinkly';</script>";
     //otherwise, fetch user's information
     $row=$result->fetch_assoc();
     $id=$row["id"];
     $forename=$row["forename"]." ";
     $surname=$row["surname"];
     //fetch more information about user
-    $query="SELECT * FROM profile WHERE id='$id'";
+    $query="SELECT * FROM profile WHERE id=$id";
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
     $nickname="\"".$row["nickname"]."\" ";
