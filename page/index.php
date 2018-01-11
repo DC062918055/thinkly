@@ -65,8 +65,19 @@
     $ownerName=$row["username"];
     //start displaying page data
     echo "<h1>$page</h1>";
-    echo "<h2>a <a href'/thinkly/profile/?u=$ownerName'>$ownerName</a> creation</h2>";
-    echo "<p>$description<br>$views views.</p>"
+    echo "<div class='column1'>";
+    echo "<h2>a <a href='/thinkly/profile/?u=$ownerName'>$ownerName</a> creation</h2>";
+    echo "<p>$description<br>$visits views.</p>";
+    echo "</div>";
+    echo "<div class='column2'>";
+    echo "<div class='newsfeed'>";
+    echo "<hr>";
+    echo "<div class='post'>";
+    $username="Duncan";
+    $page="thinkly";
+    echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
+    echo "<p class='posttext'>$content</p>";
+    echo "</div>";
     echo "</div>";
     echo "</body>";
     echo "</html>";
