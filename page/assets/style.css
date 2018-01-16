@@ -89,6 +89,10 @@ p {
 .posttext {
     margin: 0;
 }
+.date {
+    margin: 0;
+    font-size: 0.8em;
+}
 .postimage {
     margin: 0;
     width: 430px;

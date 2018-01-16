@@ -38,14 +38,14 @@
     $query="SELECT * FROM pages WHERE name='$page'";
     $result=$conn->query($query);
     if($result->num_rows==0) {
-        //inform the user that user does not exist
+        //inform the page that page does not exist
         echo "<h2>Oops. We can't seem to find what you're looking for.</h2>";
         echo "<p>The page might have been deleted, or we might not have a page named that.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
         die();
     }
     //update page name to represent user
     echo "<script type='text/javascript'>document.title='$page';</script>";
-    //otherwise, fetch user's information
+    //otherwise, fetch page's information
     $row=$result->fetch_assoc();
     $id=$row["id"];
     $owner=$row["owner"]; //this will be fetched from members table
@@ -72,13 +72,79 @@
     echo "<div class='column2'>";
     echo "<div class='newsfeed'>";
     echo "<hr>";
-    echo "<div class='post'>";
-    $username="Duncan";
-    $page="thinkly";
-    echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-    echo "<p class='posttext'>$content</p>";
-    echo "</div>";
+    //begin printout of posts
+    $query="SELECT * FROM posts WHERE page=$id ORDER BY posted DESC";
+    $result=$conn->query($query);
+    while($post=$result->fetch_assoc()) {
+        $query="SELECT username FROM members WHERE id=".$post['author'];
+        $results=$conn->query($query);
+        $row=$results->fetch_assoc();
+        echo "<div class='post'>";
+        echo "<a href='/thinkly/profile/?u=".$row['username']."'><h4>".$row['username']."</h4></a>";
+        $day=getDay(substr($post['posted'],8,2));
+        $month=getMonth(substr($post['posted'],5,2));
+        $time=substr($post['posted'],11,5);
+        echo "<p class='date'>$day $month, at $time</p>";
+        if($post['type']=="text") {
+            echo "<p class='posttext'>".$post['content']."</p>";
+        }
+        echo "</div>";
+    }
     echo "</div>";
     echo "</body>";
     echo "</html>";
+    function getDay($day) {
+        if($day==1||$day==21||$day==31) {
+            $date=$day."st";
+        }
+        else if($day==2||$day==22) {
+            $date=$day."nd";
+        }
+        else if($day==3||$day==23) {
+            $date=$day."rd";
+        }
+        else {
+            $date=$day."th";
+        }
+        return $date;
+    }
+    function getMonth($month) {
+        if($month==1) {
+           $date="January";
+        }
+        else if($month==2) {
+           $date="February";
+        }
+        else if($month==3) {
+           $date="March";
+        }
+        else if($month==4) {
+           $date="April";
+        }
+        else if($month==5) {
+           $date="May";
+        }
+        else if($month==6) {
+           $date="June";
+        }
+        else if($month==7) {
+           $date="July";
+        }
+        else if($month==8) {
+           $date="August";
+        }
+        else if($month==9) {
+           $date="September";
+        }
+        else if($month==10) {
+           $date="October";
+        }
+        else if($month==11) {
+           $date="November";
+        }
+        else {
+            $date="December";
+        }
+        return $date;
+    }
 ?>
