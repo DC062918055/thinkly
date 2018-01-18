@@ -30,6 +30,8 @@
     echo "<link rel='icon' type='image/png' href='/thinkly/assets/favicon.png' />";
     //import stylesheet
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
+    //reference JavaScript file for page class_uses
+    echo "<script type='text/javascript' src='assets/scripts/script.js'></script>"
     echo "</head>";
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
@@ -56,7 +58,11 @@
         echo "<script type='text/javascript'>document.body.style.backgroundImage=url('/thinkly/images/$img');</script>";
     }
     $visits=$row["visits"]+1;
-    //send new number of visits to database
+    //find user's role from database
+    $query="SELECT level FROM followers WHERE page=$id AND member=".$_SESSION["userId"];
+    $result=$conn->query($query);
+    $row=$result->fetch_assoc();
+    $status=$row["level"];
     $query="UPDATE pages SET visits=$visits WHERE id=$id";
     $conn->query($query);
     $query="SELECT username FROM members WHERE id=$owner";
@@ -68,7 +74,20 @@
     echo "<div class='column1'>";
     echo "<h2>a <a href='/thinkly/profile/?u=$ownerName'>$ownerName</a> creation</h2>";
     echo "<p>$description<br>$visits views.</p>";
-    echo "</div>";
+    if($_SESSION["userId"]!="") {
+        echo "<p><ul>";
+        if($status="") {
+            echo "<li><a href='assets/scripts/follow.php?p=$id' id='follow'>follow $page</a></li>";
+        }
+        else if($status!="owner") {
+            echo "<li><a href='assets/scripts/unfollow.php?p=$id' id='unfollow'>unfollow $page</a></li>";
+        }
+        if($status!=""&&$status!="reader") {
+            echo "<li><a id='new'>write a post</a></li>";
+        }
+        echo "</ul></p>";
+        echo "</div>";
+    }
     echo "<div class='column2'>";
     echo "<div class='newsfeed'>";
     echo "<hr>";
@@ -76,21 +95,40 @@
     $query="SELECT * FROM posts WHERE page=$id ORDER BY posted DESC";
     $result=$conn->query($query);
     while($post=$result->fetch_assoc()) {
-        $query="SELECT username FROM members WHERE id=".$post['author'];
+        $query="SELECT username FROM members WHERE id=".$post["author"];
         $results=$conn->query($query);
         $row=$results->fetch_assoc();
         echo "<div class='post'>";
-        echo "<a href='/thinkly/profile/?u=".$row['username']."'><h4>".$row['username']."</h4></a>";
-        $day=getDay(substr($post['posted'],8,2));
-        $month=getMonth(substr($post['posted'],5,2));
-        $time=substr($post['posted'],11,5);
+        echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+        $day=getDay(substr($post["posted"],8,2));
+        $month=getMonth(substr($post["posted"],5,2));
+        $time=substr($post["posted"],11,5);
         echo "<p class='date'>$day $month, at $time</p>";
-        if($post['type']=="text") {
-            echo "<p class='posttext'>".$post['content']."</p>";
+        if($post["type"]=="image") {
+            echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly/images/".$post["attachment"]."' class='postimage'>";
+        }
+        else if($post["type"]=="music") {
+            echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+        }
+        else {
+            echo "<p class='posttext'>".$post["content"]."</p>";
         }
         echo "</div>";
     }
     echo "</div>";
+    echo "<div class='dialog' id='newpostdisplay'></div>";
+    echo "<div class='content' id='newpost'>";
+    echo "<h1>Post to".$page."</h1>";
+    echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
+    echo "<select name='type'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select>";
+    echo "<input type='text' name='content' class='newpostinput' placeholder='Description'>";
+    echo "<input type='text' name='attachment' class='newpostinput' id='uri' placeholder='Spotify URI'>";
+    echo "<input type='submit' class='newpostbutton' value='Post'>"
+    echo "</form>";
+    echo "</div>";
+    if($_SESSION["permissionError"]==True) {
+        echo "<script type='text/javascript'>error('post');</script>";
+    }
     echo "</body>";
     echo "</html>";
     function getDay($day) {

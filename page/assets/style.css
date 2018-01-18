@@ -42,6 +42,29 @@ div::-webkit-scrollbar-thumb {
     margin: 0;
     border-bottom: 2px solid #FFFFFF;
 }
+.dialog {
+    display: none;
+    position: absolute;
+    width: 600px;
+    height: 250px;
+    z-index: 15;
+    top: 50%;
+    left: 50%;
+    margin: -125px 0 0 -300px;
+    background-color: #000000;
+    opacity: 0.8;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    border: 0px solid #000000;
+    padding: 20px;
+}
+.content {
+    display: none;
+    background-color: transparent;
+    width: 500px;
+    height: 200px;
+    margin: -100px 0 0 -250px;
+}
 #contentDisplay {
     background-color: #008FB3;
     opacity: 0.8;
@@ -123,4 +146,24 @@ ul {
 li {
     font-family: 'Noto Sans';
     color: #FFFFFF;
+}
+.newpostinput {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;``
+}
+#uri {
+    display: none;
+}
+.newpostbutton {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    float: right;
 }

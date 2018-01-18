@@ -119,33 +119,33 @@ a:hover {
     float: right;
 }
 .loginField {
-	background-color: transparent;
-	width: 300px;
-	border: 1px solid #FFFFFF;
-	font-family: 'Noto Sans';
-	text-align: center;
-	color: #FFFFFF;
-	font-size: 1em;
+  	background-color: transparent;
+  	width: 300px;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
 }
 .loginField::-webkit-input-placeholder {
-	color: #FFFFFF;
+	 color: #FFFFFF;
 }
 .loginField::-moz-placeholder {
-	color: #FFFFFF;
+	 color: #FFFFFF;
 }
 .loginField:-ms-input-placeholder {
-	color: #FFFFFF;
+	 color: #FFFFFF;
 }
 .loginField:-moz-placeholder {
-	color: #FFFFFF;
+	 color: #FFFFFF;
 }
 .loginButton {
-	background-color: transparent;
-	border: 1px solid #FFFFFF;
-	font-family: 'Noto Sans';
-	text-align: center;
-	color: #FFFFFF;
-	font-size: 1em;
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
 }
 form {
     text-align: center;
