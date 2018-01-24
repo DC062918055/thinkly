@@ -13,10 +13,29 @@
     //get page to be unfollowed
     $page=strip_tags($_GET["p"]);
     //get post data to be submitted
-    $type=$_GET["type"];
-    $content=$_GET["content"];
-    $attachment=$_GET["attachment"];
+    $type=$_POST["type"];
+    $content=$_POST["content"];
+    $attachment=$_POST["uri"];
     $posted=date('Y/m/d H:i:s');
+    //fetch page name
+    $query="SELECT name FROM pages WHERE id=$page";
+    $result=$conn->query($query);
+    $row=$result->fetch_assoc();
+    $pagename=$row["name"];
+    //upload image to server, if image attached
+    if($type=="image") {
+        //primitive upload procedure - see required vs. desired
+        $dir="/images/";
+        //generate name based on page and timestamp
+        $file=$dir.$pagename."_".$posted;
+        //upload the file
+        $upload=move_uploaded_file($_FILES["image"]["tmp_name"]),$file);
+        //if there was an error, let the user know
+        if(!$upload) {
+            echo "There was an error uplaoding your file. Click <a href='/thinkly/page/?p=$pagename'>here</a> to try again.";
+        }
+        $attachment=$file;
+    }
     //check the user has post permissions
     $query="SELECT * FROM followers WHERE page=$page AND member=".$_SESSION["userId"];
     $result=$conn->query($query);
@@ -28,11 +47,7 @@
     else {
         $_SESSION["permissionError"]=True;
     }
-    //fetch page name
-    $query="SELECT name FROM pages WHERE id=$page";
-    $result=$conn->query($query);
-    $row=$result->fetch_assoc();
     //return user to page
-    header("Location: /thinkly/page?p=".$row["name"]);
+    header("Location: /thinkly/page?p=$pagename");
     die();
 ?>

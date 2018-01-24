@@ -105,7 +105,7 @@
         $time=substr($post["posted"],11,5);
         echo "<p class='date'>$day $month, at $time</p>";
         if($post["type"]=="image") {
-            echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly/images/".$post["attachment"]."' class='postimage'>";
+            echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
         }
         else if($post["type"]=="music") {
             echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
@@ -120,8 +120,9 @@
     echo "<div class='content' id='newpost'>";
     echo "<h1>Post to".$page."</h1>";
     echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
-    echo "<select name='type'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select>";
+    echo "<select id='posttype' name='type'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select>";
     echo "<input type='text' name='content' class='newpostinput' placeholder='Description'>";
+    echo "<input type='file' name='image' class='newpostbutton' id='image'>";
     echo "<input type='text' name='attachment' class='newpostinput' id='uri' placeholder='Spotify URI'>";
     echo "<input type='submit' class='newpostbutton' value='Post'>"
     echo "</form>";
