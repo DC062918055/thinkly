@@ -29,7 +29,7 @@
         //generate name based on page and timestamp
         $file=$dir.$pagename."_".$posted;
         //upload the file
-        $upload=move_uploaded_file($_FILES["image"]["tmp_name"]),$file);
+        $upload=move_uploaded_file($_FILES["image"]["tmp_name"],$file);
         //if there was an error, let the user know
         if(!$upload) {
             echo "There was an error uplaoding your file. Click <a href='/thinkly/page/?p=$pagename'>here</a> to try again.";
@@ -41,7 +41,7 @@
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
     if($result->num_rows!=0&&$row["level"]!="reader") {
-        $query="INSERT INTO posts (author,page,type,content,attachment,posted) VALUES (".$_SESSION["userId"].",$page,$type,$content,$attachment,$posted)";
+        $query="INSERT INTO posts (author,page,type,content,attachment,posted) VALUES (".$_SESSION["userId"].",$page,'$type','$content','$attachment','$posted')";
         $result=$conn->query($query);
     }
     else {

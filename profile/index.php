@@ -81,7 +81,6 @@
         echo "<h1>$name on thinkly.</h1>";
         echo "<h2>$user</h2>";
         echo "<p>$bio<br><a href='$website'>$website</a></p>";
-        //include "/thinkly/assets/functions.php";
         $day=getDay(substr($birthday,8,2));
         $month=getMonth(substr($birthday,5,2));
         echo "<p>Born on $day $month.</p>";

@@ -110,7 +110,7 @@ function emailaddressValid() {
     }
     else {
         //store validation regular expression
-        var regex=new RegExp("/[0-z.-]{1,}[@]{1}[A-z.-]{1,}[.][A-z]{2,9}/g");
+        var regex="/[0-z.-]{1,}[@]{1}[A-z.-]{1,}[.][A-z]{2,9}/g";
         //validate
         var correct=regex.test(eAddr);
         if(correct==true) {
@@ -149,7 +149,7 @@ function usernameValid() {
     }
     else {
         //store validation regular expression
-        var regex=new RegExp("/[0-z]/g");
+        var regex="/[0-z]/g";
         //validate
         var correct=regex.test(uName);
         //validate

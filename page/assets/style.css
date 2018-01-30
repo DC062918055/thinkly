@@ -59,11 +59,13 @@ div::-webkit-scrollbar-thumb {
     padding: 20px;
 }
 .content {
-    display: none;
-    background-color: transparent;
-    width: 500px;
-    height: 200px;
-    margin: -100px 0 0 -250px;
+    position: absolute;
+    width: 1000px;
+    height: 400px;
+    z-index: 15;
+    top: 50%;
+    left: 50%;
+    margin: -200px 0 0 -500px;
 }
 #contentDisplay {
     background-color: #008FB3;
@@ -153,7 +155,18 @@ li {
   	font-family: 'Noto Sans';
   	text-align: center;
   	color: #FFFFFF;
-  	font-size: 1em;``
+  	font-size: 1em;
+    height: 100px;
+    width: 500px;
+}
+.newpostattach {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    width: 500px;
 }
 #image {
     display: none;
@@ -169,4 +182,13 @@ li {
   	color: #FFFFFF;
   	font-size: 1em;
     float: right;
+}
+select {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    font-family: 'Noto Sans';
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1em;
+    width: 200px;
 }

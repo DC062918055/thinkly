@@ -30,8 +30,6 @@
     echo "<link rel='icon' type='image/png' href='/thinkly/assets/favicon.png' />";
     //import stylesheet
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
-    //reference JavaScript file for page class_uses
-    echo "<script type='text/javascript' src='assets/scripts/script.js'></script>"
     echo "</head>";
     echo "<body>";
     echo "<div class='content' id='contentDisplay'></div>";
@@ -59,7 +57,7 @@
     }
     $visits=$row["visits"]+1;
     //find user's role from database
-    $query="SELECT level FROM followers WHERE page=$id AND member=".$_SESSION["userId"];
+    $query="SELECT level FROM followers WHERE page=$id && member=".$_SESSION["userId"];
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
     $status=$row["level"];
@@ -76,14 +74,14 @@
     echo "<p>$description<br>$visits views.</p>";
     if($_SESSION["userId"]!="") {
         echo "<p><ul>";
-        if($status="") {
+        if($status=="") {
             echo "<li><a href='assets/scripts/follow.php?p=$id' id='follow'>follow $page</a></li>";
         }
         else if($status!="owner") {
             echo "<li><a href='assets/scripts/unfollow.php?p=$id' id='unfollow'>unfollow $page</a></li>";
         }
         if($status!=""&&$status!="reader") {
-            echo "<li><a id='new'>write a post</a></li>";
+            echo "<li><a onclick='show()'>write a post</a></li>";
         }
         echo "</ul></p>";
         echo "</div>";
@@ -117,19 +115,22 @@
     }
     echo "</div>";
     echo "<div class='dialog' id='newpostdisplay'></div>";
-    echo "<div class='content' id='newpost'>";
-    echo "<h1>Post to".$page."</h1>";
+    echo "<div class='dialog' id='newpost'>";
+    echo "<h1>Post to $page.</h1>";
     echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
-    echo "<select id='posttype' name='type'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select>";
-    echo "<input type='text' name='content' class='newpostinput' placeholder='Description'>";
-    echo "<input type='file' name='image' class='newpostbutton' id='image'>";
-    echo "<input type='text' name='attachment' class='newpostinput' id='uri' placeholder='Spotify URI'>";
-    echo "<input type='submit' class='newpostbutton' value='Post'>"
+    echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
+    echo "<input type='text' name='content' class='newpostinput' placeholder='post'><br><br>";
+    echo "<input type='file' name='image' class='newpost' id='image'>";
+    echo "<input type='text' name='attachment' class='newpostattach' id='uri' placeholder='Spotify URI'>";
+    echo "<input type='submit' class='newpostbutton' value='Post'>";
     echo "</form>";
     echo "</div>";
+    //display error if permission error occurred
     if($_SESSION["permissionError"]==True) {
         echo "<script type='text/javascript'>error('post');</script>";
     }
+    //reference JavaScript file for page
+    echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
     echo "</body>";
     echo "</html>";
     function getDay($day) {
