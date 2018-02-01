@@ -56,11 +56,6 @@
         echo "<script type='text/javascript'>document.body.style.backgroundImage=url('/thinkly/images/$img');</script>";
     }
     $visits=$row["visits"]+1;
-    //find user's role from database
-    $query="SELECT level FROM followers WHERE page=$id && member=".$_SESSION["userId"];
-    $result=$conn->query($query);
-    $row=$result->fetch_assoc();
-    $status=$row["level"];
     $query="UPDATE pages SET visits=$visits WHERE id=$id";
     $conn->query($query);
     $query="SELECT username FROM members WHERE id=$owner";
@@ -73,6 +68,11 @@
     echo "<h2>a <a href='/thinkly/profile/?u=$ownerName'>$ownerName</a> creation</h2>";
     echo "<p>$description<br>$visits views.</p>";
     if($_SESSION["userId"]!="") {
+        //find user's role from database
+        $query="SELECT level FROM followers WHERE page=$id && member=".$_SESSION["userId"];
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $status=$row["level"];
         echo "<p><ul>";
         if($status=="") {
             echo "<li><a href='assets/scripts/follow.php?p=$id' id='follow'>follow $page</a></li>";
@@ -116,7 +116,7 @@
     echo "</div>";
     echo "<div class='dialog' id='newpostdisplay'></div>";
     echo "<div class='dialog' id='newpost'>";
-    echo "<h1>Post to $page.</h1>";
+    echo "<a class='link' onclick='hide()'>x</a><h1>Post to $page.</h1>";
     echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
     echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
     echo "<input type='text' name='content' class='newpostinput' placeholder='post'><br><br>";

@@ -25,14 +25,18 @@
     //upload image to server, if image attached
     if($type=="image") {
         //primitive upload procedure - see required vs. desired
-        $dir="/images/";
+        $dir="/thinkly/images/";
         //generate name based on page and timestamp
-        $file=$dir.$pagename."_".$posted;
+        $fileExtension = strtolower(pathinfo($_FILES["image"]["name"],PATHINFO_EXTENSION));
+        $file=$dir.$pagename."_".substr($posted,0,10)."_".substr($posted,11,8).".".$fileExtension;
         //upload the file
+        echo $file;
+        print_r($_FILES);
         $upload=move_uploaded_file($_FILES["image"]["tmp_name"],$file);
         //if there was an error, let the user know
         if(!$upload) {
-            echo "There was an error uplaoding your file. Click <a href='/thinkly/page/?p=$pagename'>here</a> to try again.";
+            echo "There was an error uploading your file. Click <a href='/thinkly/page/?p=$pagename'>here</a> to try again.";
+            die();
         }
         $attachment=$file;
     }

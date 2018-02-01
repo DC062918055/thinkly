@@ -192,3 +192,7 @@ select {
     font-size: 1em;
     width: 200px;
 }
+.link {
+    font-family: 'Noto Sans';
+    float: right;
+}
