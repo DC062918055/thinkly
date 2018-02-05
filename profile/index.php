@@ -72,18 +72,48 @@
         //if not, display only basic information
         echo "<h1>$name on thinkly.</h1>";
         echo "<h2>$user</h2>";
-        echo "<p>$bio<br>$website</p>";
+        echo "<p>$bio<br><a href='$website'>$website</a></p>";
         //prompt user to register
         echo "<span>To connect with and see $name's posts, <a href='/thinkly/?page=login'>join thinkly</a>.</span>";
     }
     else {
         //if so, show user full details
+        echo "<div class='column1'>";
         echo "<h1>$name on thinkly.</h1>";
         echo "<h2>$user</h2>";
         echo "<p>$bio<br><a href='$website'>$website</a></p>";
+        //include "/thinkly/assets/functions.php";
         $day=getDay(substr($birthday,8,2));
         $month=getMonth(substr($birthday,5,2));
         echo "<p>Born on $day $month.</p>";
+        echo "</div>";
+        echo "<div class='column2'>";
+        //begin printout of posts
+        $query="SELECT * FROM posts WHERE author=$id ORDER BY posted DESC";
+        $result=$conn->query($query);
+        while($post=$result->fetch_assoc()) {
+            $query="SELECT name FROM posts WHERE id=".$post["page"];
+            $results=$conn->query($query);
+            $row=$results->fetch_assoc();
+            echo "<div class='post'>";
+            echo "<a href='/thinkly/page/?p=".$row["name"]."'><h4>".$row["name"]."</h4></a>";
+            $day=getDay(substr($post["posted"],8,2));
+            $month=getMonth(substr($post["posted"],5,2));
+            $time=substr($post["posted"],11,5);
+            echo "<p class='date'>$day $month, at $time</p>";
+            if($post["type"]=="image") {
+                echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+            }
+            else if($post["type"]=="music") {
+                echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+            }
+            else {
+                echo "<p class='posttext'>".$post["content"]."</p>";
+            }
+            echo "</div>";
+        }
+        echo "<hr>";
+        echo "</div>";
     }
     echo "</div>";
     echo "</body>";
