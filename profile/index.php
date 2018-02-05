@@ -86,6 +86,9 @@
         $day=getDay(substr($birthday,8,2));
         $month=getMonth(substr($birthday,5,2));
         echo "<p>Born on $day $month.</p>";
+        if($_SESSION["userId"]==$id) {
+            echo "<p><ul><li><a onclick='show()'>edit my profile</a></li></ul></p>";
+        }
         echo "</div>";
         echo "<div class='column2'>";
         //begin printout of posts
@@ -116,6 +119,24 @@
         echo "</div>";
     }
     echo "</div>";
+    if($_SESSION["userId"]==$id) {
+        echo "<div class='dialog' id='profiledisplay'></div>";
+        echo "<div class='dialog' id='profile'>";
+        echo "<a class='link' onclick='hide()'>x</a><h1>Edit your profile.</h1>";
+        echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
+        echo "<input type='text' name='nickname' class='single' placeholder='Nickname' value='$nickname'><br><br>";
+        if($birthday!="") {
+            $day=substr($birthday,8,2);
+            $month=substr($birthday,5,2);
+            $year=substr($birthday,0,4);
+        }
+        echo"<p><input type='text' name='day' class='date' placeholder='DD' value='$day'>/<input type='text' name='month' class='date' placeholder='MM' value='$month'>/<input type='text' name='year' class='date' placeholder='YYYY' value='$year'></p>";
+        echo "<input type='text' name='bio' class='paragraph' placeholder='Biography' value='$bio'><br><br>";
+        echo "<input type='text' name='birthday' class='single' placeholder='Website' value='$website'><br><br>";
+        echo "<input type='submit' class='submitbutton' value='Update'>";
+        echo "</form>";
+        echo "</div>";
+    }
     echo "</body>";
     echo "</html>";
     function getDay($day) {
