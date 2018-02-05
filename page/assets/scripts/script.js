@@ -38,8 +38,18 @@ function check() {
         }
     }
     var content=document.getElementById("newpostinput").value;
-    if(entered=="text")
-      if(content.length==0) {
-
+    else if(entered=="text")
+        if(content.length==0) {
+            document.getElementById("error").innerHTML="Please write a post.";
+            return false;
+        }
+    }
+    if(content.length>255) {
+        document.getElementById("error").innerHTML="Your post is too long!";
+        return false;
+    }
+    else {
+        document.getElementById("error").innerHTML="";
+        return true;
     }
 }

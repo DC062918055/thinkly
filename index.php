@@ -122,7 +122,7 @@
             echo "</div>";
         }
         else {
-            header("Location: /thinkly/?page=home");
+            echo "<script type='text/javascript'>window.location.assign('/thinkly/?page=home');</script>";
             die();
         }
     }
