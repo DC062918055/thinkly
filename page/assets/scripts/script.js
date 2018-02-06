@@ -1,3 +1,6 @@
+document.getElementById("postcontent").addEventListener("change",count);
+document.getElementById("postcontent").addEventListener("keypress",count);
+document.getElementById("postcontent").addEventListener("keyup",count);
 function show() {
     document.getElementById("newpostdisplay").style.display="block";
     document.getElementById("newpost").style.display="block";
@@ -30,6 +33,7 @@ function error(type) {
 function check() {
     var dropdown=document.getElementById("posttype");
     var entered=dropdown.options[dropdown.selectedIndex].text;
+    var content=document.getElementById("postcontent").value;
     if(entered=="music") {
         var uri=document.getElementById("uri").value;
         if(uri.length==0||uri.length>255) {
@@ -37,14 +41,13 @@ function check() {
             return false;
         }
     }
-    var content=document.getElementById("newpostinput").value;
-    else if(entered=="text")
+    else if(entered=="text") {
         if(content.length==0) {
             document.getElementById("error").innerHTML="Please write a post.";
             return false;
         }
     }
-    if(content.length>255) {
+    if(content.length>240) {
         document.getElementById("error").innerHTML="Your post is too long!";
         return false;
     }
@@ -53,3 +56,14 @@ function check() {
         return true;
     }
 }
+function count() {
+    var content=document.getElementById("postcontent").value;
+    document.getElementById("count").innerHTML=240-content.length;
+    if(content.length>240) {
+        document.getElementById("count").style.color="#FF0000";
+    }
+    else {
+        document.getElementById("count").style.color="#00FF00";
+    }
+}
+count();

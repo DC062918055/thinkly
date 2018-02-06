@@ -11,6 +11,10 @@ body {
     left: 50%;
     margin: -200px 0 0 -500px;
 }
+.post {
+    margin: 0;
+    border-bottom: 2px solid #FFFFFF;
+}
 .column1 {
     float: left;
     width: 440px;
@@ -23,11 +27,11 @@ body {
     display: none;
     position: absolute;
     width: 600px;
-    height: 250px;
+    height: 320px;
     z-index: 15;
     top: 50%;
     left: 50%;
-    margin: -125px 0 0 -300px;
+    margin: -160px 0 0 -300px;
     background-color: #000000;
     opacity: 0.8;
     border-radius: 25px;
@@ -59,9 +63,37 @@ h2 {
     color: #FFFFFF;
     margin: 0;
 }
+h3 {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
+    margin: 0;
+    font-weight: 400;
+}
+h4 {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+}
+h5 {
+    font-family: 'Noto Sans';
+    color: #FFFFFF;
+    margin: 0;
+}
 p {
     font-family: 'Noto Sans';
     color: #FFFFFF;
+}
+.posttext {
+    margin: 0;
+}
+.date {
+    margin: 0;
+    font-size: 0.8em;
+}
+.postimage {
+    margin: 0;
+    width: 430px;
+    border-radius: 30px;
 }
 span {
     font-family: 'Noto Serif';
@@ -85,7 +117,53 @@ li {
     font-family: 'Noto Sans';
     color: #FFFFFF;
 }
-#link {
+.single {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    width: 500px;
+}
+.bday {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    width: 100px;
+}
+.paragraph {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    height: 100px;
+    width: 500px;
+    word-break: break-word;
+}
+.submitbutton {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    float: right;
+}
+.link {
     font-family: 'Noto Sans';
     float: right;
+}
+.error {
+    font-family: 'Noto Sans';
+}
+.count {
+    font-family: 'Noto Sans';
+    color: #00FF00;
+    text-align: center;
 }

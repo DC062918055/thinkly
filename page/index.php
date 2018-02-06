@@ -119,9 +119,10 @@
     echo "<a class='link' onclick='hide()'>x</a><h1>Post to $page.</h1>";
     echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
     echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
-    echo "<input type='text' name='content' class='newpostinput' placeholder='post'><br><br>";
+    echo "<input type='text' name='content' class='newpostinput' id='postcontent' placeholder='post'>&nbsp;&nbsp;<span class='count' id='count'></span><br><br>";
     echo "<input type='file' name='image' class='newpost' id='image'>";
     echo "<input type='text' name='attachment' class='newpostattach' id='uri' placeholder='Spotify URI'>";
+    echo "<span class='error' id='error'></span>";
     echo "<input type='submit' class='newpostbutton' value='Post'>";
     echo "</form>";
     echo "</div>";

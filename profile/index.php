@@ -54,6 +54,7 @@
     $query="SELECT * FROM profile WHERE id=$id";
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
+    $clearnickname=$row["nickname"];
     $nickname="\"".$row["nickname"]."\" ";
     $bio=$row["bio"];
     $birthday=$row["birthday"];
@@ -78,8 +79,8 @@
     }
     else {
         //if so, show user full details
-        echo "<div class='column1'>";
         echo "<h1>$name on thinkly.</h1>";
+        echo "<div class='column1'>";
         echo "<h2>$user</h2>";
         echo "<p>$bio<br><a href='$website'>$website</a></p>";
         //include "/thinkly/assets/functions.php";
@@ -91,11 +92,12 @@
         }
         echo "</div>";
         echo "<div class='column2'>";
+        echo "<hr>";
         //begin printout of posts
         $query="SELECT * FROM posts WHERE author=$id ORDER BY posted DESC";
         $result=$conn->query($query);
         while($post=$result->fetch_assoc()) {
-            $query="SELECT name FROM posts WHERE id=".$post["page"];
+            $query="SELECT name FROM pages WHERE id=".$post["page"];
             $results=$conn->query($query);
             $row=$results->fetch_assoc();
             echo "<div class='post'>";
@@ -115,7 +117,6 @@
             }
             echo "</div>";
         }
-        echo "<hr>";
         echo "</div>";
     }
     echo "</div>";
@@ -123,20 +124,23 @@
         echo "<div class='dialog' id='profiledisplay'></div>";
         echo "<div class='dialog' id='profile'>";
         echo "<a class='link' onclick='hide()'>x</a><h1>Edit your profile.</h1>";
-        echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
-        echo "<input type='text' name='nickname' class='single' placeholder='Nickname' value='$nickname'><br><br>";
+        echo "<form action='assets/scripts/update.php?u=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
+        echo "<p><input type='text' name='nickname' class='single' placeholder='Nickname' value='$clearnickname' id='nickname'></p>";
         if($birthday!="") {
             $day=substr($birthday,8,2);
             $month=substr($birthday,5,2);
             $year=substr($birthday,0,4);
         }
-        echo"<p><input type='text' name='day' class='date' placeholder='DD' value='$day'>/<input type='text' name='month' class='date' placeholder='MM' value='$month'>/<input type='text' name='year' class='date' placeholder='YYYY' value='$year'></p>";
-        echo "<input type='text' name='bio' class='paragraph' placeholder='Biography' value='$bio'><br><br>";
-        echo "<input type='text' name='birthday' class='single' placeholder='Website' value='$website'><br><br>";
+        echo "<p><input type='text' name='day' class='bday' placeholder='DD' value='$day' id='day'> / <input type='text' name='month' class='bday' placeholder='MM' value='$month' id='month'> / <input type='text' name='year' class='bday' placeholder='YYYY' value='$year' id='year'></p>";
+        echo "<p><input type='text' name='bio' class='paragraph' placeholder='Biography' id='bio' value='$bio'>&nbsp;&nbsp;<span class='count' id='count'></span></p>";
+        echo "<p><input type='text' name='website' class='single' placeholder='Website' value='$website' id='website'></p>";
+        echo "<span class='error' id='error'></span>";
         echo "<input type='submit' class='submitbutton' value='Update'>";
         echo "</form>";
         echo "</div>";
     }
+    //reference JavaScript file for page
+    echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
     echo "</body>";
     echo "</html>";
     function getDay($day) {

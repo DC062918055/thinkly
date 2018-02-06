@@ -158,6 +158,7 @@ li {
   	font-size: 1em;
     height: 100px;
     width: 500px;
+    word-break: break-word;
 }
 .newpostattach {
   	background-color: transparent;
@@ -195,4 +196,12 @@ select {
 .link {
     font-family: 'Noto Sans';
     float: right;
+}
+.error {
+    font-family: 'Noto Sans';
+}
+.count {
+    font-family: 'Noto Sans';
+    color: #00FF00;
+    text-align: center;
 }
