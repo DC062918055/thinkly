@@ -16,7 +16,7 @@
         die();
     }
     //query database to fetch details from username entered
-    $query="SELECT * FROM members WHERE username='".$user."'";
+    $query="SELECT * FROM members WHERE username='$user'";
     $result=$conn->query($query);
     //check if username is in database
     if($result) {

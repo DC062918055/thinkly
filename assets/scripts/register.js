@@ -183,7 +183,7 @@ function passwordValid() {
     }
     else if(length<6||length>24) {
         //inform user of invalid password
-        pWordError.innerHTML="Your password is too short (less than six) or too long (more than twenty-four).)";
+        pWordError.innerHTML="Your password is too short (less than six) or too long (more than twenty-four).";
         //halt registration
         return false;
     }

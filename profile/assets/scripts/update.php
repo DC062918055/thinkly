@@ -10,7 +10,7 @@
     if($conn->connect_error) {
         die();
     }
-    //get page to be posted to
+    //get user's id as extra level of security
     $user=strip_tags($_GET["u"]);
     //get profile data to be updated
     $nickname=$_POST["nickname"];

@@ -35,7 +35,7 @@
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
     //find username
-    $query="SELECT id, forename, surname FROM members WHERE username='$user'";
+    $query="SELECT * FROM members WHERE username='$user'";
     $result=$conn->query($query);
     if($result->num_rows==0) {
         //inform the user that user does not exist
@@ -50,6 +50,7 @@
     $id=$row["id"];
     $forename=$row["forename"]." ";
     $surname=$row["surname"];
+    $email=$row["email"];
     //fetch more information about user
     $query="SELECT * FROM profile WHERE id=$id";
     $result=$conn->query($query);
@@ -90,6 +91,7 @@
         if($_SESSION["userId"]==$id) {
             echo "<p><ul>";
             echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
+            echo "<li><a onclick=\"show('email')\">change my email</a></li>";
             echo "<li><a onclick=\"show('password')\">change my password</a></li>";
             echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
             echo "</ul></p>";
@@ -128,7 +130,7 @@
         echo "<div class='dialog' id='profiledisplay'></div>";
         echo "<div class='dialog' id='profile'>";
         echo "<a class='link' onclick=\"hide('edit')\">x</a><h1>Edit your profile.</h1>";
-        echo "<form action='assets/scripts/update.php?u=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
+        echo "<form action='assets/scripts/update.php?u=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('profile')\" autocomplete='off'>";
         echo "<p><input type='text' name='nickname' class='single' placeholder='Nickname' value='$clearnickname' id='nickname'></p>";
         if($birthday!="") {
             $day=substr($birthday,8,2);
@@ -142,13 +144,24 @@
         echo "<input type='submit' class='submitbutton' value='Update'>";
         echo "</form>";
         echo "</div>";
+        echo "<div class='dialog' id='emaildisplay'></div>";
+        echo "<div class='dialog' id='email'>";
+        echo "<a class='link' onclick=\"hide('email')\">x</a><h1>Change your email.</h1>";
+        echo "<form action='assets/scripts/email.php?u=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('password')\" autocomplete='off'>";
+        echo "<p>Current Email: $email</p>";
+        echo "<p><input type='text' name='newemail' class='single' id='new' placeholder='New Email'></p>";
+        echo "<p><input type='text' name='confirmemail' class='single' id='confirm' placeholder='Confirm New Email'></p>";
+        echo "<span class='error' id='emailerror'></span>";
+        echo "<input type='submit' class='submitbutton' value='Update'>";
+        echo "</form>";
+        echo "</div>";
         echo "<div class='dialog' id='passworddisplay'></div>";
         echo "<div class='dialog' id='password'>";
         echo "<a class='link' onclick=\"hide('password')\">x</a><h1>Change your password.</h1>";
-        echo "<form action='assets/scripts/password.php?u=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
-        echo "<p><input type='password' name='original' class='single' placeholder='Current Pasword'></p>";
-        echo "<p><input type='password' name='new' class='single' placeholder='New Pasword'></p>";
-        echo "<p><input type='password' name='confirm' class='single' placeholder='Confirm New Pasword'></p>";
+        echo "<form action='assets/scripts/password.php?u=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('password')\" autocomplete='off'>";
+        echo "<p><input type='password' name='original' class='single' id='original' placeholder='Current Password'></p>";
+        echo "<p><input type='password' name='newpass' class='single' id='newpass' placeholder='New Password'></p>";
+        echo "<p><input type='password' name='confirmpass' class='single' id='confirmpass' placeholder='Confirm New Password'></p>";
         echo "<span class='error' id='passworderror'></span>";
         echo "<input type='submit' class='submitbutton' value='Update'>";
         echo "</form>";
@@ -157,7 +170,7 @@
         echo "<div class='dialog' id='delete'>";
         echo "<a class='link' onclick=\"hide('delete')\">x</a><h1>Delete your account.</h1>";
         echo "<form action='assets/scripts/delete.php?u=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
-        echo "<p><input type='password' name='delete' class='single' placeholder='Current Pasword'></p>";
+        echo "<p><input type='password' name='delete' class='single' id='passdelete' placeholder='Current Password'></p>";
         echo "<span class='error' id='deleteerror'><span class='warning'>Warning:</span> this deletes your account permanently.</span>";
         echo "<input type='submit' class='submitbutton' value='Delete'>";
         echo "</form>";
@@ -165,6 +178,10 @@
     }
     //reference JavaScript file for page
     echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
+    if($_SESSION["incorrect"]!="") {
+        echo "<script type='text/javascript'>error('".$_SESSION["incorrect"]."');</script>"
+        $_SESSION["incorrect"]="";
+    }
     echo "</body>";
     echo "</html>";
     function getDay($day) {
