@@ -88,7 +88,11 @@
         $month=getMonth(substr($birthday,5,2));
         echo "<p>Born on $day $month.</p>";
         if($_SESSION["userId"]==$id) {
-            echo "<p><ul><li><a onclick='show()'>edit my profile</a></li></ul></p>";
+            echo "<p><ul>";
+            echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
+            echo "<li><a onclick=\"show('password')\">change my password</a></li>";
+            echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
+            echo "</ul></p>";
         }
         echo "</div>";
         echo "<div class='column2'>";
@@ -123,7 +127,7 @@
     if($_SESSION["userId"]==$id) {
         echo "<div class='dialog' id='profiledisplay'></div>";
         echo "<div class='dialog' id='profile'>";
-        echo "<a class='link' onclick='hide()'>x</a><h1>Edit your profile.</h1>";
+        echo "<a class='link' onclick=\"hide('edit')\">x</a><h1>Edit your profile.</h1>";
         echo "<form action='assets/scripts/update.php?u=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
         echo "<p><input type='text' name='nickname' class='single' placeholder='Nickname' value='$clearnickname' id='nickname'></p>";
         if($birthday!="") {
@@ -134,8 +138,28 @@
         echo "<p><input type='text' name='day' class='bday' placeholder='DD' value='$day' id='day'> / <input type='text' name='month' class='bday' placeholder='MM' value='$month' id='month'> / <input type='text' name='year' class='bday' placeholder='YYYY' value='$year' id='year'></p>";
         echo "<p><input type='text' name='bio' class='paragraph' placeholder='Biography' id='bio' value='$bio'>&nbsp;&nbsp;<span class='count' id='count'></span></p>";
         echo "<p><input type='text' name='website' class='single' placeholder='Website' value='$website' id='website'></p>";
-        echo "<span class='error' id='error'></span>";
+        echo "<span class='error' id='profileerror'></span>";
         echo "<input type='submit' class='submitbutton' value='Update'>";
+        echo "</form>";
+        echo "</div>";
+        echo "<div class='dialog' id='passworddisplay'></div>";
+        echo "<div class='dialog' id='password'>";
+        echo "<a class='link' onclick=\"hide('password')\">x</a><h1>Change your password.</h1>";
+        echo "<form action='assets/scripts/password.php?u=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
+        echo "<p><input type='password' name='original' class='single' placeholder='Current Pasword'></p>";
+        echo "<p><input type='password' name='new' class='single' placeholder='New Pasword'></p>";
+        echo "<p><input type='password' name='confirm' class='single' placeholder='Confirm New Pasword'></p>";
+        echo "<span class='error' id='passworderror'></span>";
+        echo "<input type='submit' class='submitbutton' value='Update'>";
+        echo "</form>";
+        echo "</div>";
+        echo "<div class='dialog' id='deletedisplay'></div>";
+        echo "<div class='dialog' id='delete'>";
+        echo "<a class='link' onclick=\"hide('delete')\">x</a><h1>Delete your account.</h1>";
+        echo "<form action='assets/scripts/delete.php?u=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
+        echo "<p><input type='password' name='delete' class='single' placeholder='Current Pasword'></p>";
+        echo "<span class='error' id='deleteerror'><span class='warning'>Warning:</span> this deletes your account permanently.</span>";
+        echo "<input type='submit' class='submitbutton' value='Delete'>";
         echo "</form>";
         echo "</div>";
     }

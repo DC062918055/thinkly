@@ -10,7 +10,7 @@
     if($conn->connect_error) {
         die();
     }
-    //get page to be unfollowed
+    //get page to be posted to
     $page=strip_tags($_GET["p"]);
     //get post data to be submitted
     $type=$_POST["type"];
@@ -46,7 +46,7 @@
     $row=$result->fetch_assoc();
     if($result->num_rows!=0&&$row["level"]!="reader") {
         $query="INSERT INTO posts (author,page,type,content,attachment,posted) VALUES (".$_SESSION["userId"].",$page,'$type','$content','$attachment','$posted')";
-        $result=$conn->query($query);
+        $conn->query($query);
     }
     else {
         $_SESSION["permissionError"]=True;

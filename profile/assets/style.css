@@ -27,7 +27,7 @@ body {
     display: none;
     position: absolute;
     width: 600px;
-    height: 320px;
+    height: 200px;
     z-index: 15;
     top: 50%;
     left: 50%;
@@ -38,6 +38,9 @@ body {
     -moz-border-radius: 25px;
     border: 0px solid #000000;
     padding: 20px;
+}
+#profile,#profileDisplay {
+    height: 320px;
 }
 #contentDisplay {
     background-color: #008FB3;
@@ -161,6 +164,10 @@ li {
 }
 .error {
     font-family: 'Noto Sans';
+}
+.warning {
+    font-family: 'Noto Sans';
+    color: #FF0000;
 }
 .count {
     font-family: 'Noto Sans';
