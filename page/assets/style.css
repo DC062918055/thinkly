@@ -149,7 +149,16 @@ li {
     font-family: 'Noto Sans';
     color: #FFFFFF;
 }
-.newpostinput {
+.single {
+  	background-color: transparent;
+  	border: 1px solid #FFFFFF;
+  	font-family: 'Noto Sans';
+  	text-align: center;
+  	color: #FFFFFF;
+  	font-size: 1em;
+    width: 500px;
+}
+.paragraph {
   	background-color: transparent;
   	border: 1px solid #FFFFFF;
   	font-family: 'Noto Sans';
@@ -160,22 +169,7 @@ li {
     width: 500px;
     word-break: break-word;
 }
-.newpostattach {
-  	background-color: transparent;
-  	border: 1px solid #FFFFFF;
-  	font-family: 'Noto Sans';
-  	text-align: center;
-  	color: #FFFFFF;
-  	font-size: 1em;
-    width: 500px;
-}
-#image {
-    display: none;
-}
-#uri {
-    display: none;
-}
-.newpostbutton {
+.submitbutton {
   	background-color: transparent;
   	border: 1px solid #FFFFFF;
   	font-family: 'Noto Sans';
@@ -183,6 +177,12 @@ li {
   	color: #FFFFFF;
   	font-size: 1em;
     float: right;
+}
+#image {
+    display: none;
+}
+#uri {
+    display: none;
 }
 select {
     background-color: transparent;
@@ -204,4 +204,8 @@ select {
     font-family: 'Noto Sans';
     color: #00FF00;
     text-align: center;
+}
+.warning {
+    font-family: 'Noto Sans';
+    color: #FF0000;
 }

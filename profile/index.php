@@ -147,10 +147,10 @@
         echo "<div class='dialog' id='emaildisplay'></div>";
         echo "<div class='dialog' id='email'>";
         echo "<a class='link' onclick=\"hide('email')\">x</a><h1>Change your email.</h1>";
-        echo "<form action='assets/scripts/email.php?u=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('password')\" autocomplete='off'>";
+        echo "<form action='assets/scripts/email.php?u=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('email')\" autocomplete='off'>";
         echo "<p>Current Email: $email</p>";
-        echo "<p><input type='text' name='newemail' class='single' id='new' placeholder='New Email'></p>";
-        echo "<p><input type='text' name='confirmemail' class='single' id='confirm' placeholder='Confirm New Email'></p>";
+        echo "<p><input type='text' name='newemail' class='single' id='newemail' placeholder='New Email'></p>";
+        echo "<p><input type='text' name='confirmemail' class='single' id='confirmemail' placeholder='Confirm New Email'></p>";
         echo "<span class='error' id='emailerror'></span>";
         echo "<input type='submit' class='submitbutton' value='Update'>";
         echo "</form>";
@@ -179,7 +179,7 @@
     //reference JavaScript file for page
     echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
     if($_SESSION["incorrect"]!="") {
-        echo "<script type='text/javascript'>error('".$_SESSION["incorrect"]."');</script>"
+        echo "<script type='text/javascript'>error('".$_SESSION["incorrect"]."');</script>";
         $_SESSION["incorrect"]="";
     }
     echo "</body>";

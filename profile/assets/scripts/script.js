@@ -81,7 +81,8 @@ function check(form) {
             document.getElementById("profileerror").innerHTML="Please enter a valid month.";
             return false;
         }
-        if(year>=getFullYear()) {
+        var current=new Date();
+        if(year>=current.getFullYear()) {
             document.getElementById("profileerror").innerHTML="Please enter a valid year. Birthdays this year are not permitted.";
             return false;
         }
@@ -95,6 +96,36 @@ function check(form) {
         }
         document.getElementById("profileerror").innerHTML="";
         return true;
+    }
+    else if(form=="email") {
+        var email=document.getElementById("newemail").value;
+        var confirm=document.getElementById("confirmemail").value;
+        if(email.length==0) {
+            document.getElementById("emailerror").innerHTML="Please enter an email."
+            return false;
+        }
+        else if(email.length>254) {
+            document.getElementById("emailerror").innerHTML="Please enter a valid email.";
+            return false;
+        }
+        else {
+            var regex=/[0-z.-]{1,}[@]{1}[A-z.-]{1,}[.][A-z]{2,9}/g;
+            var correct=regex.test(email);
+            if(correct==true) {
+                if(email==confirm) {
+                    document.getElementById("emailerror").innerHTML="";
+                    return true;
+                }
+                else {
+                    document.getElementById("emailerror").innerHTML="Please ensure the two emails match.";
+                    return false;
+                }
+            }
+            else {
+                document.getElementById("emailerror").innerHTML="Please enter a valid email.";
+                return false;
+            }
+        }
     }
     else if(form=="password") {
         var original=document.getElementById("original").value;

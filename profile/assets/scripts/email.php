@@ -22,6 +22,8 @@
     }
     //return user to profile page
     $query="SELECT username FROM members WHERE id=$user";
-    header("Location: /thinkly/profile/?u=$user");
+    $result=$conn->query($query);
+    $row=$result->fetch_assoc();
+    header("Location: /thinkly/profile/?u=".$row["username"]);
     die();
 ?>

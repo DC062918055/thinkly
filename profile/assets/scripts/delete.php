@@ -27,6 +27,8 @@
             $conn->query($query);
             $query="DELETE FROM profile WHERE id=$user";
             $conn->query($query);
+            $query="DELETE FROM followers WHERE member=$user";
+            $conn->query($query);
         }
         else {
             //if passoword incorrect, alert session and give user opportunity to retry

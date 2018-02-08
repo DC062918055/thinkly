@@ -43,7 +43,7 @@
         echo "<p>The page might have been deleted, or we might not have a page named that.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
         die();
     }
-    //update page name to represent user
+    //update page name to represent page
     echo "<script type='text/javascript'>document.title='$page';</script>";
     //otherwise, fetch page's information
     $row=$result->fetch_assoc();
@@ -81,7 +81,10 @@
             echo "<li><a href='assets/scripts/unfollow.php?p=$id' id='unfollow'>unfollow $page</a></li>";
         }
         if($status!=""&&$status!="reader") {
-            echo "<li><a onclick='show()'>write a post</a></li>";
+            echo "<li><a onclick=\"show('post')\">write a post</a></li>";
+        }
+        if($status=="owner") {
+            echo "<li><a onclick=\"show('delete')\">delete this page</a></li>";
         }
         echo "</ul></p>";
         echo "</div>";
@@ -116,16 +119,27 @@
     echo "</div>";
     echo "<div class='dialog' id='newpostdisplay'></div>";
     echo "<div class='dialog' id='newpost'>";
-    echo "<a class='link' onclick='hide()'>x</a><h1>Post to $page.</h1>";
-    echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'>";
+    echo "<a class='link' onclick=\"hide('post')\">x</a><h1>Post to $page.</h1>";
+    echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('post')\" autocomplete='off'>";
     echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
-    echo "<input type='text' name='content' class='newpostinput' id='postcontent' placeholder='post'>&nbsp;&nbsp;<span class='count' id='count'></span><br><br>";
+    echo "<input type='text' name='content' class='paragraph' id='postcontent' placeholder='post'>&nbsp;&nbsp;<span class='count' id='count'></span><br><br>";
     echo "<input type='file' name='image' class='newpost' id='image'>";
-    echo "<input type='text' name='attachment' class='newpostattach' id='uri' placeholder='Spotify URI'>";
+    echo "<input type='text' name='attachment' class='single' id='uri' placeholder='Spotify URI'>";
     echo "<span class='error' id='error'></span>";
-    echo "<input type='submit' class='newpostbutton' value='Post'>";
+    echo "<input type='submit' class='submitbutton' value='Post'>";
     echo "</form>";
     echo "</div>";
+    if($_SESSION["userId"]==$owner) {
+        echo "<div class='dialog' id='deletedisplay'></div>";
+        echo "<div class='dialog' id='delete'>";
+        echo "<a class='link' onclick=\"hide('delete')\">x</a><h1>Delete this page.</h1>";
+        echo "<form action='assets/scripts/delete.php?p=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
+        echo "<p><input type='password' name='delete' class='single' id='passdelete' placeholder='Current Password'></p>";
+        echo "<span class='error' id='deleteerror'><span class='warning'>Warning:</span> this deletes your page permanently, including all posts.</span>";
+        echo "<input type='submit' class='submitbutton' value='Delete'>";
+        echo "</form>";
+        echo "</div>";
+    }
     //display error if permission error occurred
     if($_SESSION["permissionError"]==True) {
         echo "<script type='text/javascript'>error('post');</script>";
