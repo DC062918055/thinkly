@@ -136,9 +136,6 @@ a:hover {
 .loginField:-ms-input-placeholder {
 	 color: #FFFFFF;
 }
-.loginField:-moz-placeholder {
-	 color: #FFFFFF;
-}
 .loginButton {
   	background-color: transparent;
   	border: 1px solid #FFFFFF;
@@ -156,4 +153,14 @@ ul {
 li {
     font-family: 'Noto Sans';
     color: #FFFFFF;
+}
+details {
+    width: 60px;;
+    color: #FFFFFF;
+}
+summary {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 2em;
 }

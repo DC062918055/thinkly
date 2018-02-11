@@ -39,7 +39,7 @@ body {
     border: 0px solid #000000;
     padding: 20px;
 }
-#profile,#profileDisplay {
+#profile,#profiledisplay {
     height: 320px;
 }
 #contentDisplay {
@@ -173,4 +173,26 @@ li {
     font-family: 'Noto Sans';
     color: #00FF00;
     text-align: center;
+}
+#search {
+    width: 100%;
+}
+#search::-webkit-input-placeholder {
+	 color: #FFFFFF;
+}
+#search::-moz-placeholder {
+	 color: #FFFFFF;
+}
+#search:-ms-input-placeholder {
+	 color: #FFFFFF;
+}
+details {
+    width: 60px;;
+    color: #FFFFFF;
+}
+summary {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 2em;
 }

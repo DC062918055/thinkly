@@ -2,12 +2,17 @@
     //begin session
     session_start();
     //get user being searched
-    $user=strip_tags($_GET["u"]);
-    //check user has been entered
-    if($user=="") {
-        //redirect the user
-        header("Location: /thinkly/?page=home");
-        die();
+    if(isset($_GET["u"])) {
+        $user=strip_tags($_GET["u"]);
+    }
+    else {
+        $user="";
+    }
+    if(isset($_GET["s"])) {
+        $search=strip_tags($_GET["s"]);
+    }
+    else {
+        $search="";
     }
     //connect to the MySQL server
     $address="localhost";
@@ -32,98 +37,153 @@
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
     echo "</head>";
     echo "<body>";
+    if($_SESSION["userId"]=="") {
+        echo "<a id='loginlink' href='/thinkly/?page=login'>Login or Register</a>";
+    }
+    else {
+        echo "<a class='link' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+    }
+    echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profile'><a href='/thinkly/profile'>profiles</a></p></details>";
+    if($user=="") {
+        echo "<script type='text/javascript'>document.getElementById('profile').style.fontWeight='700';</script>";
+    }
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
-    //find username
-    $query="SELECT * FROM members WHERE username='$user'";
-    $result=$conn->query($query);
-    if($result->num_rows==0) {
-        //inform the user that user does not exist
-        echo "<h2>Oops. We can't seem to find who you're looking for.</h2>";
-        echo "<p>The user may have deleted their account, or we might not have a user under that name.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
-        die();
-    }
-    //update page name to represent user
-    echo "<script type='text/javascript'>document.title='$user on thinkly';</script>";
-    //otherwise, fetch user's information
-    $row=$result->fetch_assoc();
-    $id=$row["id"];
-    $forename=$row["forename"]." ";
-    $surname=$row["surname"];
-    $email=$row["email"];
-    //fetch more information about user
-    $query="SELECT * FROM profile WHERE id=$id";
-    $result=$conn->query($query);
-    $row=$result->fetch_assoc();
-    $clearnickname=$row["nickname"];
-    $nickname="\"".$row["nickname"]."\" ";
-    $bio=$row["bio"];
-    $birthday=$row["birthday"];
-    $website=$row["website"];
-    //generate user's name
-    if($nickname!="\"\" ") {
-        //concatenate names
-        $name=$forename.$nickname.$surname;
-    }
-    else {
-        //otherwise, exclude $nickname
-        $name=$forename.$surname;
-    }
-    //see if user has logged in
-    if($_SESSION["userId"]=="") {
-        //if not, display only basic information
-        echo "<h1>$name on thinkly.</h1>";
-        echo "<h2>$user</h2>";
-        echo "<p>$bio<br><a href='$website'>$website</a></p>";
-        //prompt user to register
-        echo "<span>To connect with and see $name's posts, <a href='/thinkly/?page=login'>join thinkly</a>.</span>";
-    }
-    else {
-        //if so, show user full details
-        echo "<h1>$name on thinkly.</h1>";
+    //check user has been entered
+    if($user=="") {
+        //if not, display home profile page
+        $id=$_SESSION["userId"];
+        $query="SELECT * FROM members WHERE id=$id";
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $username=$row["username"];
+        $email=$row["email"];
+        //fetch more information about user
+        $query="SELECT * FROM profile WHERE id=$id";
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $clearnickname=$row["nickname"];
+        $nickname="\"".$row["nickname"]."\" ";
+        $bio=$row["bio"];
+        $birthday=$row["birthday"];
+        $website=$row["website"];
         echo "<div class='column1'>";
-        echo "<h2>$user</h2>";
-        echo "<p>$bio<br><a href='$website'>$website</a></p>";
-        //include "/thinkly/assets/functions.php";
-        $day=getDay(substr($birthday,8,2));
-        $month=getMonth(substr($birthday,5,2));
-        echo "<p>Born on $day $month.</p>";
-        if($_SESSION["userId"]==$id) {
-            echo "<p><ul>";
-            echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
-            echo "<li><a onclick=\"show('email')\">change my email</a></li>";
-            echo "<li><a onclick=\"show('password')\">change my password</a></li>";
-            echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
-            echo "</ul></p>";
+        echo "<h1>Find a user.</h1>";
+        echo "<p><form action='' method='get'>";
+        echo "<input type='text' class='single' name='s' id='search' placeholder='Search' value='$search'>";
+        echo "</form></p>";
+        if($search!="") {
+            $query="SELECT * FROM members WHERE username LIKE '%$search%'";
+            $result=$conn->query($query);
+            while($row=$result->fetch_assoc()) {
+                $uname=$row["username"];
+                echo "<p><a href='?u=$uname'>$uname</a></p>";
+            }
         }
         echo "</div>";
         echo "<div class='column2'>";
-        echo "<hr>";
-        //begin printout of posts
-        $query="SELECT * FROM posts WHERE author=$id ORDER BY posted DESC";
+        echo "<h1>Manage your profile.</h1>";
+        echo "<p><ul>";
+        echo "<li><a href='?u=$username'>view my profile</a></li>";
+        echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
+        echo "<li><a onclick=\"show('email')\">change my email</a></li>";
+        echo "<li><a onclick=\"show('password')\">change my password</a></li>";
+        echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
+        echo "</ul></p>";
+        echo "</div>";
+    }
+    else {
+        //find username
+        $query="SELECT * FROM members WHERE username='$user'";
         $result=$conn->query($query);
-        while($post=$result->fetch_assoc()) {
-            $query="SELECT name FROM pages WHERE id=".$post["page"];
-            $results=$conn->query($query);
-            $row=$results->fetch_assoc();
-            echo "<div class='post'>";
-            echo "<a href='/thinkly/page/?p=".$row["name"]."'><h4>".$row["name"]."</h4></a>";
-            $day=getDay(substr($post["posted"],8,2));
-            $month=getMonth(substr($post["posted"],5,2));
-            $time=substr($post["posted"],11,5);
-            echo "<p class='date'>$day $month, at $time</p>";
-            if($post["type"]=="image") {
-                echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+        if($result->num_rows==0) {
+            //inform the user that user does not exist
+            echo "<h2>Oops. We can't seem to find who you're looking for.</h2>";
+            echo "<p>The user may have deleted their account, or we might not have a user under that name.<br>But it's okay! <a href='/thinkly/?page=home'>Click here to go back to the main site.</a></p>";
+            die();
+        }
+        //update page name to represent user
+        echo "<script type='text/javascript'>document.title='$user on thinkly';</script>";
+        //otherwise, fetch user's information
+        $row=$result->fetch_assoc();
+        $id=$row["id"];
+        $forename=$row["forename"]." ";
+        $surname=$row["surname"];
+        $email=$row["email"];
+        //fetch more information about user
+        $query="SELECT * FROM profile WHERE id=$id";
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $clearnickname=$row["nickname"];
+        $nickname="\"".$row["nickname"]."\" ";
+        $bio=$row["bio"];
+        $birthday=$row["birthday"];
+        $website=$row["website"];
+        //generate user's name
+        if($nickname!="\"\" ") {
+            //concatenate names
+            $name=$forename.$nickname.$surname;
+        }
+        else {
+            //otherwise, exclude $nickname
+            $name=$forename.$surname;
+        }
+        //see if user has logged in
+        if($_SESSION["userId"]=="") {
+            //if not, display only basic information
+            echo "<h1>$name on thinkly.</h1>";
+            echo "<h2>$user</h2>";
+            echo "<p>$bio<br><a href='$website'>$website</a></p>";
+            //prompt user to register
+            echo "<span>To connect with and see $name's posts, <a href='/thinkly/?page=login'>join thinkly</a>.</span>";
+        }
+        else {
+            //if so, show user full details
+            echo "<h1>$name on thinkly.</h1>";
+            echo "<div class='column1'>";
+            echo "<h2>$user</h2>";
+            echo "<p>$bio<br><a href='$website'>$website</a></p>";
+            //include "/thinkly/assets/functions.php";
+            $day=getDay(substr($birthday,8,2));
+            $month=getMonth(substr($birthday,5,2));
+            echo "<p>Born on $day $month.</p>";
+            if($_SESSION["userId"]==$id) {
+                echo "<p><ul>";
+                echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
+                echo "<li><a onclick=\"show('email')\">change my email</a></li>";
+                echo "<li><a onclick=\"show('password')\">change my password</a></li>";
+                echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
+                echo "</ul></p>";
             }
-            else if($post["type"]=="music") {
-                echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
-            }
-            else {
-                echo "<p class='posttext'>".$post["content"]."</p>";
+            echo "</div>";
+            echo "<div class='column2'>";
+            echo "<hr>";
+            //begin printout of posts
+            $query="SELECT * FROM posts WHERE author=$id ORDER BY posted DESC";
+            $result=$conn->query($query);
+            while($post=$result->fetch_assoc()) {
+                $query="SELECT name FROM pages WHERE id=".$post["page"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<div class='post'>";
+                echo "<a href='/thinkly/page/?p=".$row["name"]."'><h4>".$row["name"]."</h4></a>";
+                $day=getDay(substr($post["posted"],8,2));
+                $month=getMonth(substr($post["posted"],5,2));
+                $time=substr($post["posted"],11,5);
+                echo "<p class='date'>$day $month, at $time</p>";
+                if($post["type"]=="image") {
+                    echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+                }
+                else if($post["type"]=="music") {
+                    echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+                }
+                else {
+                    echo "<p class='posttext'>".$post["content"]."</p>";
+                }
+                echo "</div>";
             }
             echo "</div>";
         }
-        echo "</div>";
     }
     echo "</div>";
     if($_SESSION["userId"]==$id) {
