@@ -1,10 +1,17 @@
-document.getElementById("postcontent").addEventListener("change",count);
-document.getElementById("postcontent").addEventListener("keypress",count);
-document.getElementById("postcontent").addEventListener("keyup",count);
+document.getElementById("postcontent").addEventListener("change",countPost);
+document.getElementById("postcontent").addEventListener("keypress",countPost);
+document.getElementById("postcontent").addEventListener("keyup",countPost);
+document.getElementById("updatecontent").addEventListener("change",countUpdate);
+document.getElementById("updatecontent").addEventListener("keypress",countUpdate);
+document.getElementById("updatecontent").addEventListener("keyup",countUpdate);
 function show(show) {
     if(show=="post") {
         document.getElementById("newpostdisplay").style.display="block";
         document.getElementById("newpost").style.display="block";
+    }
+    else if(show=="update") {
+        document.getElementById("updatedisplay").style.display="block";
+        document.getElementById("update").style.display="block";
     }
     else if(show=="delete") {
         document.getElementById("deletedisplay").style.display="block";
@@ -15,6 +22,10 @@ function hide(hide) {
     if(hide=="post") {
         document.getElementById("newpostdisplay").style.display="none";
         document.getElementById("newpost").style.display="none";
+    }
+    else if(hide=="update") {
+        document.getElementById("updatedisplay").style.display="none";
+        document.getElementById("update").style.display="none";
     }
     else if(hide=="delete") {
         document.getElementById("deletedisplay").style.display="none";
@@ -96,14 +107,25 @@ function check(form) {
         return true;
     }
 }
-function count() {
+function countPost() {
     var content=document.getElementById("postcontent").value;
-    document.getElementById("count").innerHTML=240-content.length;
+    document.getElementById("countpost").innerHTML=240-content.length;
     if(content.length>240) {
-        document.getElementById("count").style.color="#FF0000";
+        document.getElementById("countpost").style.color="#FF0000";
     }
     else {
-        document.getElementById("count").style.color="#00FF00";
+        document.getElementById("countpost").style.color="#00FF00";
     }
 }
-count();
+function countUpdate() {
+    var content=document.getElementById("updatecontent").value;
+    document.getElementById("countupdate").innerHTML=240-content.length;
+    if(content.length>240) {
+        document.getElementById("countupdate").style.color="#FF0000";
+    }
+    else {
+        document.getElementById("countupdate").style.color="#00FF00";
+    }
+}
+countPost();
+countUpdate();

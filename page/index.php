@@ -166,12 +166,15 @@
             if($status!=""&&$status!="reader") {
                 echo "<li><a onclick=\"show('post')\">write a post</a></li>";
             }
+            if($status=="admin"||$status="owner") {
+                echo "<li><a onclick=\"show('update')\">update this page's details</a></li>";
+            }
             if($status=="owner") {
                 echo "<li><a onclick=\"show('delete')\">delete this page</a></li>";
             }
             echo "</ul></p>";
-            echo "</div>";
         }
+        echo "</div>";
         echo "<div class='column2'>";
         echo "<div class='newsfeed'>";
         echo "<hr>";
@@ -203,19 +206,30 @@
         echo "<div class='dialog' id='newpostdisplay'></div>";
         echo "<div class='dialog' id='newpost'>";
         echo "<a class='link' onclick=\"hide('post')\">x</a><h1>Post to $page.</h1>";
-        echo "<form action='assets/scripts/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('post')\" autocomplete='off'>";
+        echo "<form action='assets/post.php?p=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('post')\" autocomplete='off'>";
         echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
-        echo "<input type='text' name='content' class='paragraph' id='postcontent' placeholder='post'>&nbsp;&nbsp;<span class='count' id='count'></span><br><br>";
+        echo "<textarea name='content' class='paragraph' id='postcontent' placeholder='post'></textarea>&nbsp;&nbsp;<span class='count' id='countpost'></span><br><br>";
         echo "<input type='file' name='image' class='newpost' id='image'>";
         echo "<input type='text' name='attachment' class='single' id='uri' placeholder='Spotify URI'>";
         echo "<span class='error' id='error'></span>";
         echo "<input type='submit' class='submitbutton' value='Post'>";
         echo "</form>";
         echo "</div>";
+        if($status=="admin"||$status="owner") {
+            echo "<div class='dialog' id='updatedisplay'></div>";
+            echo "<div class='dialog' id='update'>";
+            echo "<a class='link' onclick=\"hide('update')\">x</a><h1>Update $page's details.</h1>";
+            echo "<form action='assets/scripts/update.php?p=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('update')\" autocomplete='off'>";
+            echo "<p><textarea name='description' class='paragraph' id='updatecontent' placeholder='description'>$description</textarea>&nbsp;&nbsp;<span class='count' id='countupdate'></span></p>";
+            echo "<span class='error' id='updateerror'></span>";
+            echo "<input type='submit' class='submitbutton' value='Update'>";
+            echo "</form>";
+            echo "</div>";
+        }
         if($_SESSION["userId"]==$owner) {
             echo "<div class='dialog' id='deletedisplay'></div>";
             echo "<div class='dialog' id='delete'>";
-            echo "<a class='link' onclick=\"hide('delete')\">x</a><h1>Delete this page.</h1>";
+            echo "<a class='link' onclick=\"hide('delete')\">x</a><h1>Delete $page.</h1>";
             echo "<form action='assets/scripts/delete.php?p=$id' method='post' enctype='multipart/form-data' autocomplete='off'>";
             echo "<p><input type='password' name='delete' class='single' id='passdelete' placeholder='Current Password'></p>";
             echo "<span class='error' id='deleteerror'><span class='warning'>Warning:</span> this deletes your page permanently, including all posts.</span>";

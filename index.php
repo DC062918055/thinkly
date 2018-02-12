@@ -89,8 +89,8 @@
         $username=$row["username"];
         if($page=="welcome") {
             echo "<h1>Welcome to thinkly!</h1>";
-            echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li><a href='/thinkly/profile/?u=$username'>create your profile</a></li><li>find a page</li><li>create a page</li><li>find a group</li><li>create a group</li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
-            echo "<div class='column2'><h2>Trending</h2><hr><p>This is a trending post...</p><hr></div>";
+            echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li><a href='/thinkly/profile/'>find a user</a></li><li><a href='/thinkly/profile/?u=$username'>create your profile</a></li><li><a href='/thinkly/page'>find a page</a></li><li><a href='/thinkly/page'>create a page</a></li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
+            echo "<div class='column2'><h2>Discover</h2><hr><p>This is a trending post...</p><hr></div>";
         }
         else if($page=="home") {
             echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
@@ -118,21 +118,41 @@
             //different post formats, to be merged later
             //simple text post
             echo "<hr>";
-            echo "<div class='post'>";
-            $username="Duncan";
-            $page="Quantum Physics";
-            $content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent maximus ante a congue semper. Nam sit amet arcu ante. Sed vel dictum tortor. Ut at nunc posuere, accumsan lacus et, porttitor dolor. Pellentesque habitant morbi tristique senectus sed.";
-            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<p class='posttext'>$content</p>";
-            echo "</div>";
-            //image post
-            echo "<div class='post'>";
-            $username="Duncan";
-            $page="Scotland";
-            $slug="/prismpad/assets/background3.jpg";
-            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<p class='posttext'>$content</p><img src='$slug' class='postimage'>";
-            echo "</div>";
+            //begin printout of posts
+            $query="SELECT page FROM followers WHERE member=".$_SESSION["userId"];
+            $results=$conn->query($query);
+            $query="SELECT * FROM posts WHERE";
+            while($row=$results->fetch_assoc()) {
+                $query=$query." page=".$row["page"]." ||";
+            }
+            $query=substr($query,0,-3);
+            $query=$query." ORDER BY posted DESC LIMIT 50";
+            $result=$conn->query($query);
+            while($post=$result->fetch_assoc()) {
+                echo "<div class='post'>";
+                $query="SELECT username FROM members WHERE id=".$post["author"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                $query="SELECT name FROM pages WHERE id=".$post["page"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                $day=getDay(substr($post["posted"],8,2));
+                $month=getMonth(substr($post["posted"],5,2));
+                $time=substr($post["posted"],11,5);
+                echo "<p class='date'>$day $month, at $time</p>";
+                if($post["type"]=="image") {
+                    echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+                }
+                else if($post["type"]=="music") {
+                    echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+                }
+                else {
+                    echo "<p class='posttext'>".$post["content"]."</p>";
+                }
+                echo "</div>";
+            }
             echo "</div>";
             echo "</div>";
             echo "<div class='column2'>";
@@ -164,4 +184,58 @@
     echo "</div>";
     echo "</body>";
     echo "</html>";
+    function getDay($day) {
+        if($day==1||$day==21||$day==31) {
+            $date=$day."st";
+        }
+        else if($day==2||$day==22) {
+            $date=$day."nd";
+        }
+        else if($day==3||$day==23) {
+            $date=$day."rd";
+        }
+        else {
+            $date=$day."th";
+        }
+        return $date;
+    }
+    function getMonth($month) {
+        if($month==1) {
+           $date="January";
+        }
+        else if($month==2) {
+           $date="February";
+        }
+        else if($month==3) {
+           $date="March";
+        }
+        else if($month==4) {
+           $date="April";
+        }
+        else if($month==5) {
+           $date="May";
+        }
+        else if($month==6) {
+           $date="June";
+        }
+        else if($month==7) {
+           $date="July";
+        }
+        else if($month==8) {
+           $date="August";
+        }
+        else if($month==9) {
+           $date="September";
+        }
+        else if($month==10) {
+           $date="October";
+        }
+        else if($month==11) {
+           $date="November";
+        }
+        else {
+            $date="December";
+        }
+        return $date;
+    }
 ?>

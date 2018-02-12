@@ -46,13 +46,13 @@
     else {
         echo "<a class='link' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
     }
-    echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profile'><a href='/thinkly/profile'>profiles</a></p></details>";
+    echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profilelink'><a href='/thinkly/profile'>profiles</a></p></details>";
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
     //check user has been entered
     if($user=="") {
         //set nav item as bold
-        echo "<script type='text/javascript'>document.getElementById('profile').style.fontWeight='700';</script>";
+        echo "<script type='text/javascript'>document.getElementById('profilelink').style.fontWeight='700';</script>";
         //if not, display home profile page
         $id=$_SESSION["userId"];
         if($id!="") {
@@ -218,7 +218,7 @@
             $year=substr($birthday,0,4);
         }
         echo "<p><input type='text' name='day' class='bday' placeholder='DD' value='$day' id='day'> / <input type='text' name='month' class='bday' placeholder='MM' value='$month' id='month'> / <input type='text' name='year' class='bday' placeholder='YYYY' value='$year' id='year'></p>";
-        echo "<p><input type='text' name='bio' class='paragraph' placeholder='Biography' id='bio' value='$bio'>&nbsp;&nbsp;<span class='count' id='count'></span></p>";
+        echo "<p><textarea name='bio' class='paragraph' placeholder='Biography' id='bio'>$bio</textarea>&nbsp;&nbsp;<span class='count' id='count'></span></p>";
         echo "<p><input type='text' name='website' class='single' placeholder='Website' value='$website' id='website'></p>";
         echo "<span class='error' id='profileerror'></span>";
         echo "<input type='submit' class='submitbutton' value='Update'>";

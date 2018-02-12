@@ -184,7 +184,7 @@ li {
   	font-size: 1em;
     height: 100px;
     width: 500px;
-    word-break: break-word;
+    resize: none;
 }
 .submitbutton {
   	background-color: transparent;
