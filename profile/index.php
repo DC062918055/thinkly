@@ -1,6 +1,9 @@
 <?php
     //begin session
     session_start();
+    if(!isset($_SESSION["userId"])) {
+        $_SESSION["userId"]="";
+    }
     //get user being searched
     if(isset($_GET["u"])) {
         $user=strip_tags($_GET["u"]);
@@ -38,58 +41,75 @@
     echo "</head>";
     echo "<body>";
     if($_SESSION["userId"]=="") {
-        echo "<a id='loginlink' href='/thinkly/?page=login'>Login or Register</a>";
+        echo "<a class='link' href='/thinkly/?page=login'>Login or Register</a>";
     }
     else {
         echo "<a class='link' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
     }
     echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profile'><a href='/thinkly/profile'>profiles</a></p></details>";
-    if($user=="") {
-        echo "<script type='text/javascript'>document.getElementById('profile').style.fontWeight='700';</script>";
-    }
     echo "<div class='content' id='contentDisplay'></div>";
     echo "<div class='content' id='contentBox'>";
     //check user has been entered
     if($user=="") {
+        //set nav item as bold
+        echo "<script type='text/javascript'>document.getElementById('profile').style.fontWeight='700';</script>";
         //if not, display home profile page
         $id=$_SESSION["userId"];
-        $query="SELECT * FROM members WHERE id=$id";
-        $result=$conn->query($query);
-        $row=$result->fetch_assoc();
-        $username=$row["username"];
-        $email=$row["email"];
-        //fetch more information about user
-        $query="SELECT * FROM profile WHERE id=$id";
-        $result=$conn->query($query);
-        $row=$result->fetch_assoc();
-        $clearnickname=$row["nickname"];
-        $nickname="\"".$row["nickname"]."\" ";
-        $bio=$row["bio"];
-        $birthday=$row["birthday"];
-        $website=$row["website"];
+        if($id!="") {
+            $query="SELECT * FROM members WHERE id=$id";
+            $result=$conn->query($query);
+            $row=$result->fetch_assoc();
+            $username=$row["username"];
+            $email=$row["email"];
+            //fetch more information about user
+            $query="SELECT * FROM profile WHERE id=$id";
+            $result=$conn->query($query);
+            $row=$result->fetch_assoc();
+            $clearnickname=$row["nickname"];
+            $nickname="\"".$row["nickname"]."\" ";
+            $bio=$row["bio"];
+            $birthday=$row["birthday"];
+            $website=$row["website"];
+        }
         echo "<div class='column1'>";
         echo "<h1>Find a user.</h1>";
-        echo "<p><form action='' method='get'>";
-        echo "<input type='text' class='single' name='s' id='search' placeholder='Search' value='$search'>";
+        echo "<p><form action='' method='get' autocomplete='off'>";
+        echo "<input type='text' class='singleregister' name='s' id='search' placeholder='Search' value='$search'>";
         echo "</form></p>";
         if($search!="") {
             $query="SELECT * FROM members WHERE username LIKE '%$search%'";
             $result=$conn->query($query);
-            while($row=$result->fetch_assoc()) {
-                $uname=$row["username"];
-                echo "<p><a href='?u=$uname'>$uname</a></p>";
+            if($result->num_rows==0) {
+                echo "<p>No users found with that name. Please check your spelling and try again.";
+            }
+            else {
+                echo "<p><ul>";
+                while($row=$result->fetch_assoc()) {
+                    $uname=$row["username"];
+                    echo "<li><a href='?u=$uname'>$uname</a></li>";
+                }
+                echo "</ul></p>";
             }
         }
         echo "</div>";
         echo "<div class='column2'>";
-        echo "<h1>Manage your profile.</h1>";
-        echo "<p><ul>";
-        echo "<li><a href='?u=$username'>view my profile</a></li>";
-        echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
-        echo "<li><a onclick=\"show('email')\">change my email</a></li>";
-        echo "<li><a onclick=\"show('password')\">change my password</a></li>";
-        echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
-        echo "</ul></p>";
+        if($id=="") {
+            echo "<h1>Register for thinkly.</h1>";
+            //import registration validation script
+            echo "<script type='text/javascript' src='/thinkly/assets/scripts/register.js'></script>";
+            echo "<p>View and create your own profile. Sign up now!</p>";
+            echo "<form action='/thinkly/assets/scripts/register.php' class='register' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='singleregister' id='fName' name='fName' placeholder='First Name'><br><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='singleregister' id='sName' name='sName' placeholder='Surname'><br><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='singleregister' id='eAddr' name='eAddr' placeholder='Email'><br><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='singleregister' id='uName' name='uName' placeholder='Username'><br><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='singleregister' id='pWord' name='pWord' placeholder='Password'><br><span class='registerError' id='pWordError'></span><div class='space'></div><input type='password' class='singleregister' id='cpWordregister' name='cpWord' placeholder='Confirm Password'><br><span class='registerError' id='cpWordError'></span><div class='space'></div><input class='submitregister' type='submit' value='Register'></form>";
+        }
+        else {
+            echo "<h1>Manage your profile.</h1>";
+            echo "<p><ul>";
+            echo "<li><a href='?u=$username'>view my profile</a></li>";
+            echo "<li><a onclick=\"show('edit')\">edit my profile</a></li>";
+            echo "<li><a onclick=\"show('email')\">change my email</a></li>";
+            echo "<li><a onclick=\"show('password')\">change my password</a></li>";
+            echo "<li><a onclick=\"show('delete')\">delete my account</a></li>";
+            echo "</ul></p>";
+        }
         echo "</div>";
     }
     else {

@@ -15,6 +15,9 @@ body {
     margin: 0;
     border-bottom: 2px solid #FFFFFF;
 }
+.space {
+    height: 6px;
+}
 .column1 {
     float: left;
     width: 440px;
@@ -129,6 +132,15 @@ li {
   	font-size: 1em;
     width: 500px;
 }
+.singleregister {
+    background-color: transparent;
+    width: 300px;
+    border: 1px solid #FFFFFF;
+    font-family: 'Noto Sans';
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1em;
+}
 .bday {
   	background-color: transparent;
   	border: 1px solid #FFFFFF;
@@ -158,6 +170,19 @@ li {
   	font-size: 1em;
     float: right;
 }
+.submitregister {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    font-family: 'Noto Sans';
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1em;
+}
+.registerError {
+    font-family: 'Noto Sans';
+    font-weight: 400;
+    font-size: 0.6em;
+}
 .link {
     font-family: 'Noto Sans';
     float: right;
@@ -177,13 +202,13 @@ li {
 #search {
     width: 100%;
 }
-#search::-webkit-input-placeholder {
+.singleregister::-webkit-input-placeholder {
 	 color: #FFFFFF;
 }
-#search::-moz-placeholder {
+.singleregister::-moz-placeholder {
 	 color: #FFFFFF;
 }
-#search:-ms-input-placeholder {
+.singleregister:-ms-input-placeholder {
 	 color: #FFFFFF;
 }
 details {
@@ -195,4 +220,7 @@ summary {
     color: #FFFFFF;
     margin: 0;
     font-size: 2em;
+}
+.register {
+    text-align: center;
 }

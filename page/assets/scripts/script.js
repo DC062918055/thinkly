@@ -82,6 +82,19 @@ function check(form) {
         document.getElementById("deleteerror").innerHTML="";
         return true;
     }
+    else if(form=="create") {
+        var name=document.getElementById("pagename").value;
+        if(name.length==0) {
+            document.getElementById("pageerror").innerHTML="Please enter a name for the new page.";
+            return false;
+        }
+        else if(name.length>50) {
+            document.getElementById("pageerror").innerHTML="Please ensure your page name does not exceed fifty characters.";
+            return false;
+        }
+        document.getElementById("pageerror").innerHTML="";
+        return true;
+    }
 }
 function count() {
     var content=document.getElementById("postcontent").value;

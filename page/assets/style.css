@@ -35,6 +35,11 @@ div::-webkit-scrollbar-thumb {
     height: 300px;
     overflow-y: auto;
 }
+.pagelist {
+    width: 450px;
+    height: 150px;
+    overflow-y: auto;
+}
 .space {
     height: 6px;
 }
@@ -80,6 +85,9 @@ div::-webkit-scrollbar-thumb {
     width: 900px;
     height: 350px;
     margin: -175px 0 0 -450px;
+}
+.space {
+    height: 6px;
 }
 h1 {
     font-family: 'Noto Serif';
@@ -158,6 +166,15 @@ li {
   	font-size: 1em;
     width: 500px;
 }
+.singleregister {
+    background-color: transparent;
+    width: 300px;
+    border: 1px solid #FFFFFF;
+    font-family: 'Noto Sans';
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1em;
+}
 .paragraph {
   	background-color: transparent;
   	border: 1px solid #FFFFFF;
@@ -177,6 +194,19 @@ li {
   	color: #FFFFFF;
   	font-size: 1em;
     float: right;
+}
+.submitregister {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    font-family: 'Noto Sans';
+    text-align: center;
+    color: #FFFFFF;
+    font-size: 1em;
+}
+.registerError {
+    font-family: 'Noto Sans';
+    font-weight: 400;
+    font-size: 0.6em;
 }
 #image {
     display: none;
@@ -208,4 +238,29 @@ select {
 .warning {
     font-family: 'Noto Sans';
     color: #FF0000;
+}
+#search {
+    width: 100%;
+}
+.singleregister::-webkit-input-placeholder {
+	 color: #FFFFFF;
+}
+.singleregister::-moz-placeholder {
+	 color: #FFFFFF;
+}
+.singleregister:-ms-input-placeholder {
+	 color: #FFFFFF;
+}
+details {
+    width: 60px;;
+    color: #FFFFFF;
+}
+summary {
+    font-family: 'Noto Serif';
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 2em;
+}
+.register {
+    text-align: center;
 }
