@@ -118,8 +118,9 @@ a {
 a:hover {
     text-decoration: underline;
 }
-#loginlink {
+.link {
     font-family: 'Noto Sans';
+    font-weight: 400;
     float: right;
 }
 .loginField {

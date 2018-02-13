@@ -44,7 +44,15 @@
         echo "<a class='link' href='/thinkly/?page=login'>Login or Register</a>";
     }
     else {
-        echo "<a class='link' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+        $query="SELECT username FROM members WHERE id=".$_SESSION["userId"];
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $uname=$row["username"];
+        echo "<span class='link'><a href='/thinkly/profile/?u=$uname' id='unamelink'>$uname</a> - <a href='/thinkly/assets/scripts/logout.php'>Logout</a></span>";
+        //set nav item as bold
+        if($user==$uname) {
+            echo "<script type='text/javascript'>document.getElementById('unamelink').style.fontWeight='700';</script>";
+        }
     }
     echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profilelink'><a href='/thinkly/profile'>profiles</a></p></details>";
     echo "<div class='content' id='contentDisplay'></div>";

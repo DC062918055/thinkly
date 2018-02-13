@@ -185,6 +185,7 @@ li {
 }
 .link {
     font-family: 'Noto Sans';
+    font-weight: 400;
     float: right;
 }
 .error {

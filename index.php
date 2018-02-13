@@ -35,10 +35,15 @@
     echo "</head>";
     echo "<body>";
     if($_SESSION["userId"]=="") {
-        echo "<a id='loginlink' href='/thinkly/?page=login'>Login or Register</a>";
+        echo "<a class='link' href='/thinkly/?page=login'>Login or Register</a>";
     }
     else {
-        echo "<a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+        include "assets/scripts/connect.php";
+        $query="SELECT username FROM members WHERE id=".$_SESSION["userId"];
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        $uname=$row["username"];
+        echo "<span class='link'><a href='/thinkly/profile/?u=$uname'>$uname</a> - <a href='/thinkly/assets/scripts/logout.php'>Logout</a></span>";
     }
     echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profile'><a href='/thinkly/profile'>profiles</a></p></details>";
     if($page=="home") {
@@ -90,10 +95,40 @@
         if($page=="welcome") {
             echo "<h1>Welcome to thinkly!</h1>";
             echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li><a href='/thinkly/profile/'>find a user</a></li><li><a href='/thinkly/profile/?u=$username'>create your profile</a></li><li><a href='/thinkly/page'>find a page</a></li><li><a href='/thinkly/page'>create a page</a></li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
-            echo "<div class='column2'><h2>Discover</h2><hr><p>This is a trending post...</p><hr></div>";
+            echo "<div class='column2'><h2>Discover</h2><div class='newfeed'><hr>";
+            //select all recent posts
+            $query="SELECT * FROM posts ORDER BY posted DESC LIMIT 50";
+            $result=$conn->query($query);
+            while($post=$result->fetch_assoc()) {
+                echo "<div class='post'>";
+                $query="SELECT username FROM members WHERE id=".$post["author"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                $query="SELECT name FROM pages WHERE id=".$post["page"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                $day=getDay(substr($post["posted"],8,2));
+                $month=getMonth(substr($post["posted"],5,2));
+                $time=substr($post["posted"],11,5);
+                echo "<p class='date'>$day $month, at $time</p>";
+                if($post["type"]=="image") {
+                    echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+                }
+                else if($post["type"]=="music") {
+                    echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+                }
+                else {
+                    echo "<p class='posttext'>".$post["content"]."</p>";
+                }
+                echo "</div>";
+            }
+            echo "</div>";
+            echo "</div>";
         }
         else if($page=="home") {
-            echo "<h1>thinkly</h1><a id='loginlink' href='/thinkly/assets/scripts/logout.php'>Logout</a>";
+            echo "<h1>thinkly</h1>";
             //fetch local time
             $date=date('Y/m/d H:i:s');
             //get hour
@@ -159,20 +194,34 @@
             echo "<h3>...or discover some more.</h3>";
             echo "<div class='newsfeed'>";
             echo "<hr>";
-            echo "<div class='post'>";
-            //music post
-            $username="Duncan";
-            $page="Blur";
-            $uri="spotify:track:5ACPXwE34GmPhHAuUHEycE";
-            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<p class='posttext'>$content</p><iframe src='https://open.spotify.com/embed?uri=$uri' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
-            echo "</div>";
-            echo "<div class='post'>";
-            $username="Duncan";
-            $page="thinkly";
-            echo "<a href='/thinkly/profile/?u=$username'><h4>$username</h4></a><a href='/thinkly/page/?p=$page'><h5>$page</h5></a>";
-            echo "<p class='posttext'>$content</p>";
-            echo "</div>";
+            //select all recent posts
+            $query="SELECT * FROM posts ORDER BY posted DESC LIMIT 50";
+            $result=$conn->query($query);
+            while($post=$result->fetch_assoc()) {
+                echo "<div class='post'>";
+                $query="SELECT username FROM members WHERE id=".$post["author"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                $query="SELECT name FROM pages WHERE id=".$post["page"];
+                $results=$conn->query($query);
+                $row=$results->fetch_assoc();
+                echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                $day=getDay(substr($post["posted"],8,2));
+                $month=getMonth(substr($post["posted"],5,2));
+                $time=substr($post["posted"],11,5);
+                echo "<p class='date'>$day $month, at $time</p>";
+                if($post["type"]=="image") {
+                    echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
+                }
+                else if($post["type"]=="music") {
+                    echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
+                }
+                else {
+                    echo "<p class='posttext'>".$post["content"]."</p>";
+                }
+                echo "</div>";
+            }
             echo "</div>";
             echo "</div>";
         }
