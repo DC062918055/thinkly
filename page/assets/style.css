@@ -63,6 +63,11 @@ div::-webkit-scrollbar-thumb {
     border: 0px solid #000000;
     padding: 20px;
 }
+.permissionlist {
+    width: 600px;
+    height: 200px;
+    overflow-y: auto;
+}
 .content {
     position: absolute;
     width: 1000px;
@@ -130,6 +135,12 @@ p {
     margin: 0;
     width: 430px;
     border-radius: 30px;
+}
+.information {
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    position: fixed;
 }
 span {
     font-family: 'Noto Serif';

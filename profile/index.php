@@ -85,6 +85,7 @@
         echo "<input type='text' class='singleregister' name='s' id='search' placeholder='Search' value='$search'>";
         echo "</form></p>";
         if($search!="") {
+            echo "<div class='newsfeed'>";
             $query="SELECT * FROM members WHERE username LIKE '%$search%'";
             $result=$conn->query($query);
             if($result->num_rows==0) {
@@ -98,6 +99,7 @@
                 }
                 echo "</ul></p>";
             }
+            echo "</div>";
         }
         echo "</div>";
         echo "<div class='column2'>";
@@ -270,6 +272,7 @@
         echo "<script type='text/javascript'>error('".$_SESSION["incorrect"]."');</script>";
         $_SESSION["incorrect"]="";
     }
+    echo "<p class='information'>&#169 thinkly, 2018</span>";
     echo "</body>";
     echo "</html>";
     function getDay($day) {

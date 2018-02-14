@@ -231,6 +231,7 @@
         }
     }
     echo "</div>";
+    echo "<p class='information'>&#169 thinkly, 2018</span>";
     echo "</body>";
     echo "</html>";
     function getDay($day) {

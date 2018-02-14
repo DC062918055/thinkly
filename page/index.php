@@ -69,7 +69,7 @@
         echo "<input type='text' class='singleregister' name='s' id='search' placeholder='Search' value='$search'>";
         echo "</form></p>";
         if($search!="") {
-            echo "<div class='newfeed'>";
+            echo "<div class='newsfeed'>";
             $query="SELECT * FROM pages WHERE name LIKE '%$search%'";
             $result=$conn->query($query);
             if($result->num_rows==0) {
@@ -171,7 +171,8 @@
                 echo "<li><a onclick=\"show('post')\">write a post</a></li>";
             }
             if($status=="admin"||$status="owner") {
-                echo "<li><a onclick=\"show('update')\">update this page's details</a></li>";
+                echo "<li><a onclick=\"show('update')\">change the description</a></li>";
+                echo "<li><a onclick=\"show('permission')\">change the editors</a></li>";
             }
             if($status=="owner") {
                 echo "<li><a onclick=\"show('delete')\">delete this page</a></li>";
@@ -222,12 +223,50 @@
         if($status=="admin"||$status="owner") {
             echo "<div class='dialog' id='updatedisplay'></div>";
             echo "<div class='dialog' id='update'>";
-            echo "<a class='link' onclick=\"hide('update')\">x</a><h1>Update $page's details.</h1>";
+            echo "<a class='link' onclick=\"hide('update')\">x</a><h1>Update $page's description.</h1>";
             echo "<form action='assets/scripts/update.php?p=$id' method='post' enctype='multipart/form-data' onsubmit=\"return check('update')\" autocomplete='off'>";
             echo "<p><textarea name='description' class='paragraph' id='updatecontent' placeholder='description'>$description</textarea>&nbsp;&nbsp;<span class='count' id='countupdate'></span></p>";
             echo "<span class='error' id='updateerror'></span>";
             echo "<input type='submit' class='submitbutton' value='Update'>";
             echo "</form>";
+            echo "</div>";
+            echo "<div class='dialog' id='permissiondisplay'></div>";
+            echo "<div class='dialog' id='permission'>";
+            echo "<a class='link' onclick=\"hide('permission')\">x</a><h1>Change $page's editors.</h1>";
+            echo "<hr>";
+            echo "<div class='permissionlist'>";
+            $query="SELECT * FROM followers WHERE page=$id";
+            $results=$conn->query($query);
+            while($list=$results->fetch_assoc()) {
+                //fetch username from server
+                $query="SELECT username FROM members WHERE id=".$list["member"];
+                $result=$conn->query($query);
+                $row=$result->fetch_assoc();
+                $username=$row["username"];
+                $level=$list["level"];
+                //display users
+                echo "<div class='post'><p>";
+                echo $username;
+                if($status=="owner") {
+                    if($level=="owner") {
+                        echo "<span class='link'>$level</span>";
+                    }
+                    else {
+                        echo "<select class='permissionselect' name='perms'><option value='reader'>reader</option><option value='writer'>writer</option><option value='admin'>admin</option></select>";
+                    }
+                }
+                else {
+                    if($level=="owner"||$level=="admin") {
+                        echo "<span class='link'>$level</span>";
+                    }
+                    else {
+                        echo "<select class='permissionselect' name='perms'><option value='reader'>reader</option><option value='writer'>writer</option></select>";
+                    }
+                }
+                echo "</div></p>";
+
+            }
+            echo "</div>";
             echo "</div>";
         }
         if($_SESSION["userId"]==$owner) {
@@ -248,6 +287,7 @@
     }
     //reference JavaScript file for page
     echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
+    echo "<p class='information'>&#169 thinkly, 2018</span>";
     echo "</body>";
     echo "</html>";
     function getDay($day) {

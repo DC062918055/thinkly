@@ -13,6 +13,10 @@ function show(show) {
         document.getElementById("updatedisplay").style.display="block";
         document.getElementById("update").style.display="block";
     }
+    else if(show=="permission") {
+        document.getElementById("permissiondisplay").style.display="block";
+        document.getElementById("permission").style.display="block";
+    }
     else if(show=="delete") {
         document.getElementById("deletedisplay").style.display="block";
         document.getElementById("delete").style.display="block";
@@ -26,6 +30,10 @@ function hide(hide) {
     else if(hide=="update") {
         document.getElementById("updatedisplay").style.display="none";
         document.getElementById("update").style.display="none";
+    }
+    else if(hide=="permission") {
+        document.getElementById("permissiondisplay").style.display="none";
+        document.getElementById("permission").style.display="none";
     }
     else if(hide=="delete") {
         document.getElementById("deletedisplay").style.display="none";
