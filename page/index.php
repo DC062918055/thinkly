@@ -170,7 +170,7 @@
             if($status!=""&&$status!="reader") {
                 echo "<li><a onclick=\"show('post')\">write a post</a></li>";
             }
-            if($status=="admin"||$status="owner") {
+            if($status=="admin"||$status=="owner") {
                 echo "<li><a onclick=\"show('update')\">change the description</a></li>";
                 echo "<li><a onclick=\"show('permission')\">change the editors</a></li>";
             }
@@ -220,7 +220,7 @@
         echo "<input type='submit' class='submitbutton' value='Post'>";
         echo "</form>";
         echo "</div>";
-        if($status=="admin"||$status="owner") {
+        if($status=="admin"||$status=="owner") {
             echo "<div class='dialog' id='updatedisplay'></div>";
             echo "<div class='dialog' id='update'>";
             echo "<a class='link' onclick=\"hide('update')\">x</a><h1>Update $page's description.</h1>";
@@ -252,7 +252,8 @@
                         echo "<span class='link'>$level</span>";
                     }
                     else {
-                        echo "<select class='permissionselect' name='perms'><option value='reader'>reader</option><option value='writer'>writer</option><option value='admin'>admin</option></select>";
+                        echo "<select class='permissionselect' name='perms' id='$username' onchange=\"send($id,".$_SESSION["userId"].",'$username')\"><option value='reader'>reader</option><option value='writer'>writer</option><option value='admin'>admin</option></select>";
+                        echo "<script type='text/javascript'>document.getElementById('$username').value='$level';</script>";
                     }
                 }
                 else {
@@ -260,7 +261,8 @@
                         echo "<span class='link'>$level</span>";
                     }
                     else {
-                        echo "<select class='permissionselect' name='perms'><option value='reader'>reader</option><option value='writer'>writer</option></select>";
+                        echo "<select class='permissionselect' name='perms' id='$username' onchange=\"send($id,".$_SESSION["userId"].",'$username')\"><option value='reader'>reader</option><option value='writer'>writer</option></select>";
+                        echo "<script type='text/javascript'>document.getElementById('$username').value='$level';</script>";
                     }
                 }
                 echo "</div></p>";

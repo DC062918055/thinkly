@@ -230,6 +230,9 @@ select {
     font-size: 1em;
     width: 200px;
 }
+.permissionselect {
+    float: right;
+}
 .link {
     font-family: 'Noto Sans';
     font-weight: 400;

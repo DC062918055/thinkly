@@ -12,10 +12,10 @@
     }
     //get page to be unfollowed
     $page=strip_tags($_GET["p"]);
-    //check the user does follows the page
+    //check the user does follow the page
     $query="SELECT * FROM followers WHERE page=$page AND member=".$_SESSION["userId"];
     $result=$conn->query($query);
-    if($result->num_rows==0) {
+    if($result->num_rows!=0) {
         //if not, delete user's name from table
         $query="DELETE FROM followers WHERE page=$page AND member=".$_SESSION["userId"];
         $result=$conn->query($query);
