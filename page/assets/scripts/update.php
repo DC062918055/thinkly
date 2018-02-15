@@ -23,7 +23,7 @@
     $query="SELECT * FROM followers WHERE page=$page AND member=".$_SESSION["userId"];
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
-    if($result->num_rows!=0&&$row["level"]!="reader") {
+    if($row["level"]=="admin"||$row["level"]=="owner") {
         $query="UPDATE pages SET description='$description' WHERE id=$page";
         $conn->query($query);
     }

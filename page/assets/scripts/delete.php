@@ -14,13 +14,19 @@
     $page=strip_tags($_GET["p"]);
     //get password entered
     $pass=$_POST["delete"];
-    //get username before delete
-    $query="SELECT name FROM pages WHERE id=$page";
+    echo $pass;
+    //get pagename and owner before delete
+    $query="SELECT * FROM pages WHERE id=$page";
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
+    $name=$row["name"];
     //check user is trying to delete their page
-    if($_SESSION["userId"]==$user) {
-        //check their password is correct
+    if($_SESSION["userId"]==$row["owner"]) {
+        //fetch password
+        $query="SELECT * FROM members WHERE id=".$_SESSION["userId"];
+        $result=$conn->query($query);
+        $row=$result->fetch_assoc();
+        //check is correct
         if(password_verify($pass,$row["password"])) {
             //seems as if they are deleting, proceed
             $query="DELETE FROM pages WHERE id=$page";
@@ -33,10 +39,10 @@
         else {
             //if password incorrect, alert session and give user opportunity to retry
             $_SESSION["incorrect"]="delete";
-            header("Location: /thinkly/profile/?u=".$row["username"]);
+            header("Location: /thinkly/page/?p=$name");
             die();
         }
     }
-    header("Location: /thinkly/");
+    header("Location: /thinkly/page/");
     die();
 ?>

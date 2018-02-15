@@ -23,6 +23,7 @@
     $row=$result->fetch_assoc();
     $pagename=$row["name"];
     //upload image to server, if image attached
+    //THERE ARE CURRENTLY PROBLEMS WITH UPLOAD. WORKING ON THIS. DEPRECATED ALL OTHER REFERENCES, EXCEPT HERE.
     if($type=="image") {
         //primitive upload procedure - see required vs. desired
         $dir="assets/images/";

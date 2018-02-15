@@ -24,7 +24,7 @@
         $result=$conn->query($query);
         $row=$result->fetch_assoc();
         $id=$row["id"];
-        $query="INSERT INTO followers (member,page,status) VALUES (".$_SESSION["userId"].",'$id','owner')";
+        $query="INSERT INTO followers (member,page,level) VALUES (".$_SESSION["userId"].",$id,'owner')";
         $conn->query($query);
         //go to page
         header("Location: /thinkly/page/?p=$page");

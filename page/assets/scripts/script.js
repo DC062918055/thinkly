@@ -143,10 +143,5 @@ function send(page,submit,user) {
     var request=new XMLHttpRequest();
     request.open("POST","assets/scripts/permission.php",true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-        }
-    };
     request.send("page="+page+"&submit="+submit+"&username="+user+"&level="+entered);
 }
