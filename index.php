@@ -34,18 +34,22 @@
     echo "<link rel='stylesheet' type='text/css' href='assets/style.css'>";
     echo "</head>";
     echo "<body>";
+    //if no one logged in, show login link
     if($_SESSION["userId"]=="") {
         echo "<a class='link' href='/thinkly/?page=login'>Login or Register</a>";
     }
+    //otherwise, connect to server and fetch username to provide link to profile/logout
     else {
         include "assets/scripts/connect.php";
         $query="SELECT username FROM members WHERE id=".$_SESSION["userId"];
         $result=$conn->query($query);
         $row=$result->fetch_assoc();
-        $uname=$row["username"];
-        echo "<span class='link'><a href='/thinkly/profile/?u=$uname'>$uname</a> - <a href='/thinkly/assets/scripts/logout.php'>Logout</a></span>";
+        $username=$row["username"];
+        echo "<span class='link'><a href='/thinkly/profile/?u=$username'>$username</a> - <a href='/thinkly/assets/scripts/logout.php'>Logout</a></span>";
     }
+    //show menu system
     echo "<details><summary>t</summary><p id='home'><a href='/thinkly/?page=home'>home</a></p><p id='page'><a href='/thinkly/page'>pages</a></p><p id='profile'><a href='/thinkly/profile'>profiles</a></p></details>";
+    //if on home page, set the link for it to bold
     if($page=="home") {
         echo "<script type='text/javascript'>document.getElementById('home').style.fontWeight='700';</script>";
     }
@@ -59,6 +63,7 @@
             echo "<h1>Login to thinkly.</h1>";
             echo "<p>Already a member? Welcome back! Login below.</p>";
             echo "<form action='assets/scripts/login.php' method='post' enctype='multipart/form-data'><input class='loginField' type='text' name='username' placeholder='Username' autofocus><br><div class='space'></div><input class='loginField' type='password' name='password' placeholder='Password'><br>";
+            //use session to find errors encountered during login
             if($_SESSION["incorrect"]) {
                 echo "<span class='registerError'>Incorrect username or password.</span>";
             }
@@ -75,6 +80,7 @@
             echo "<p>Not yet a member? Welcome! Sign up below.</p>";
             echo "<form action='assets/scripts/register.php' method='post' enctype='multipart/form-data' onsubmit='return check()' autocomplete='off'><input type='text' class='loginField' id='fName' name='fName' placeholder='First Name'><br><span class='registerError' id='fNameError'></span><div class='space'></div><input type='text' class='loginField' id='sName' name='sName' placeholder='Surname'><br><span class='registerError' id='sNameError'></span><div class='space'></div><input type='text' class='loginField' id='eAddr' name='eAddr' placeholder='Email'><br><span class='registerError' id='eAddrError'></span><div class='space'></div><input type='text' class='loginField' id='uName' name='uName' placeholder='Username'><br><span class='registerError' id='uNameError'></span><div class='space'></div><input type='password' class='loginField' id='pWord' name='pWord' placeholder='Password'><br><span class='registerError' id='pWordError'></span><div class='space'></div><input type='password' class='loginField' id='cpWord' name='cpWord' placeholder='Confirm Password'><br><span class='registerError' id='cpWordError'></span><div class='space'></div><input class='loginButton' type='submit' value='Register'></form>";
             echo "</div>";
+            //use session to find errors encountered in registration
             if($_SESSION["userTaken"]==True) {
                 echo "<script type='text/javascript'>document.getElementById('uNameError').innerHTML='That username is already taken. Please choose another name.';";
             }
@@ -86,12 +92,7 @@
         }
     }
     else {
-        //otherwise, allow access to pages requiring registration and fetch username
-        include "assets/scripts/connect.php";
-        $query="SELECT * FROM members WHERE id=".$_SESSION["userId"];
-        $result=$conn->query($query);
-        $row=$result->fetch_assoc();
-        $username=$row["username"];
+        //otherwise, allow access to pages requiring registration
         if($page=="welcome") {
             echo "<h1>Welcome to thinkly!</h1>";
             echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li><a href='/thinkly/profile/'>find a user</a></li><li><a href='/thinkly/profile/?u=$username'>create your profile</a></li><li><a href='/thinkly/page'>find a page</a></li><li><a href='/thinkly/page'>create a page</a></li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
@@ -99,26 +100,36 @@
             //select all recent posts
             $query="SELECT * FROM posts ORDER BY posted DESC LIMIT 50";
             $result=$conn->query($query);
+            //display each post fetched from server
             while($post=$result->fetch_assoc()) {
                 echo "<div class='post'>";
+                //get author's username
                 $query="SELECT username FROM members WHERE id=".$post["author"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display username and link to profile
                 echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                //fetch page name
                 $query="SELECT name FROM pages WHERE id=".$post["page"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display page name and link to it
                 echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                //format date and time using functions
                 $day=getDay(substr($post["posted"],8,2));
                 $month=getMonth(substr($post["posted"],5,2));
                 $time=substr($post["posted"],11,5);
+                //display date and time
                 echo "<p class='date'>$day $month, at $time</p>";
+                //if image post, display content and image
                 if($post["type"]=="image") {
                     echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
                 }
+                //if music, display content and Spotify widget
                 else if($post["type"]=="music") {
                     echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
                 }
+                //otherwise, just display the content
                 else {
                     echo "<p class='posttext'>".$post["content"]."</p>";
                 }
@@ -154,35 +165,47 @@
             //simple text post
             echo "<hr>";
             //begin printout of posts
+            //fetch the pages the user follows
             $query="SELECT page FROM followers WHERE member=".$_SESSION["userId"];
             $results=$conn->query($query);
+            //construct query with all the pages
             $query="SELECT * FROM posts WHERE";
             while($row=$results->fetch_assoc()) {
                 $query=$query." page=".$row["page"]." ||";
             }
             $query=substr($query,0,-3);
             $query=$query." ORDER BY posted DESC LIMIT 50";
+            //run query
             $result=$conn->query($query);
             while($post=$result->fetch_assoc()) {
                 echo "<div class='post'>";
+                //get author's username
                 $query="SELECT username FROM members WHERE id=".$post["author"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display username and link to profile
                 echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                //fetch page name
                 $query="SELECT name FROM pages WHERE id=".$post["page"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display page name and link to it
                 echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                //format date and time using functions
                 $day=getDay(substr($post["posted"],8,2));
                 $month=getMonth(substr($post["posted"],5,2));
                 $time=substr($post["posted"],11,5);
+                //display date and time
                 echo "<p class='date'>$day $month, at $time</p>";
+                //if image post, display content and image
                 if($post["type"]=="image") {
                     echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
                 }
+                //if music, display content and Spotify widget
                 else if($post["type"]=="music") {
                     echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
                 }
+                //otherwise, just display the content
                 else {
                     echo "<p class='posttext'>".$post["content"]."</p>";
                 }
@@ -194,29 +217,38 @@
             echo "<h3>...or discover some more.</h3>";
             echo "<div class='newsfeed'>";
             echo "<hr>";
-            //select all recent posts
+            //select all recent posts from database
             $query="SELECT * FROM posts ORDER BY posted DESC LIMIT 50";
             $result=$conn->query($query);
             while($post=$result->fetch_assoc()) {
                 echo "<div class='post'>";
+                //get author's username
                 $query="SELECT username FROM members WHERE id=".$post["author"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display username and link to profile
                 echo "<a href='/thinkly/profile/?u=".$row["username"]."'><h4>".$row["username"]."</h4></a>";
+                //fetch page name
                 $query="SELECT name FROM pages WHERE id=".$post["page"];
                 $results=$conn->query($query);
                 $row=$results->fetch_assoc();
+                //display page name and link to it
                 echo "<a href='/thinkly/page/?p=".$row["name"]."'><h5>".$row["name"]."</h5></a>";
+                //format date and time using functions
                 $day=getDay(substr($post["posted"],8,2));
                 $month=getMonth(substr($post["posted"],5,2));
                 $time=substr($post["posted"],11,5);
+                //display date and time
                 echo "<p class='date'>$day $month, at $time</p>";
+                //if image post, display content and image
                 if($post["type"]=="image") {
                     echo "<p class='posttext'>".$post["content"]."</p><img src='/thinkly".$post["attachment"]."' class='postimage'>";
                 }
+                //if music, display content and Spotify widget
                 else if($post["type"]=="music") {
                     echo "<p class='posttext'>".$post["content"]."</p><iframe src='https://open.spotify.com/embed?uri=".$post["attachment"]."' width='430' height='80' frameborder='0' allowtransparency='true'></iframe>";
                 }
+                //otherwise, just display the content
                 else {
                     echo "<p class='posttext'>".$post["content"]."</p>";
                 }
@@ -235,6 +267,7 @@
     echo "</body>";
     echo "</html>";
     function getDay($day) {
+        //get correct prefix for day
         if($day==1||$day==21||$day==31) {
             $date=$day."st";
         }
@@ -247,9 +280,13 @@
         else {
             $date=$day."th";
         }
+        if($day==0) {
+            $date=="";
+        }
         return $date;
     }
     function getMonth($month) {
+        //convert integer month into string month
         if($month==1) {
            $date="January";
         }
@@ -283,8 +320,11 @@
         else if($month==11) {
            $date="November";
         }
-        else {
+        else if($month==12) {
             $date="December";
+        }
+        else {
+            $date="";
         }
         return $date;
     }
