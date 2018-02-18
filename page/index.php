@@ -246,7 +246,7 @@
             echo "<select onchange='change()' name='type' id='posttype'><option value='text'>text</option><option value='image'>image</option><option value='music'>music</option></select><br><br>";
             echo "<textarea name='content' class='paragraph' id='postcontent' placeholder='post'></textarea>&nbsp;&nbsp;<span class='count' id='countpost'></span><br><br>";
             echo "<input type='file' name='image' class='newpost' id='image'>";
-            echo "<input type='text' name='attachment' class='single' id='uri' placeholder='Spotify URI'>";
+            echo "<input type='text' name='uri' class='single' id='uri' placeholder='Spotify URI'>";
             echo "<span class='error' id='error'></span>";
             echo "<input type='submit' class='submitbutton' value='Post'>";
             echo "</form>";
