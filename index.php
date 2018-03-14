@@ -83,6 +83,7 @@
             //use session to find errors encountered in registration
             if($_SESSION["userTaken"]==True) {
                 echo "<script type='text/javascript'>document.getElementById('uNameError').innerHTML='That username is already taken. Please choose another username.';</script>";
+                $_SESSION["userTaken"]=False;
             }
         }
         else {
