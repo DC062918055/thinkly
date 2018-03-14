@@ -46,7 +46,7 @@
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
     if($result->num_rows!=0&&$row["level"]!="reader") {
-        $query="INSERT INTO posts (author,page,type,content,attachment,posted) VALUES (".$_SESSION["userId"].",$page,'$type','$content','$attachment','$posted')";
+        $query="INSERT INTO posts (author,page,type,content,attachment,posted) VALUES (".$_SESSION["userId"].",$page,'$type',\"$content\",'$attachment','$posted')";
         $conn->query($query);
     }
     else {

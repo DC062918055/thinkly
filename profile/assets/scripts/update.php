@@ -20,7 +20,7 @@
     //check user is the user
     if($_SESSION["userId"]==$user) {
         //if so, update their profile
-        $query="UPDATE profile SET nickname='$nickname',bio='$bio',birthday='$bday',website='$website' WHERE id=$user";
+        $query="UPDATE profile SET nickname='$nickname',bio=\"$bio\",birthday='$bday',website='$website' WHERE id=$user";
         $conn->query($query);
     }
     //fetch username

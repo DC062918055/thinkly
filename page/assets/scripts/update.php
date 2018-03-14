@@ -24,7 +24,7 @@
     $result=$conn->query($query);
     $row=$result->fetch_assoc();
     if($row["level"]=="admin"||$row["level"]=="owner") {
-        $query="UPDATE pages SET description='$description' WHERE id=$page";
+        $query="UPDATE pages SET description=\"$description\" WHERE id=$page";
         $conn->query($query);
     }
     else {
