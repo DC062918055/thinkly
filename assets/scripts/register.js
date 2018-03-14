@@ -149,7 +149,7 @@ function usernameValid() {
     }
     else {
         //store validation regular expression
-        var regex=/[0-z]/g;
+        var regex=/[0-z]{1,16}/g;
         //validate
         var correct=regex.test(uName);
         //validate
