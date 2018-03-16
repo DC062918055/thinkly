@@ -4,8 +4,8 @@
     if(!isset($_SESSION["userId"])) {
         $_SESSION["userId"]="";
     }
-    if(!isset($_SESSION["nameTaken"])) {
-        $_SESSION["nameTaken"]="";
+    if(!isset($_SESSION["pageTaken"])) {
+        $_SESSION["pageTaken"]="";
     }
     if(!isset($_SESSION["permissionError"])) {
         $_SESSION["permissionError"]="";
@@ -50,7 +50,7 @@
     if($_SESSION["userId"]=="") {
         echo "<a class='link' href='/thinkly/?page=login'>Login or Register</a>";
     }
-    //otherwise, fetch username to provide link to profile/logout
+    //otherwise, fetch username to provide links to pages/logout
     else {
         $query="SELECT username FROM members WHERE id=".$_SESSION["userId"];
         $result=$conn->query($query);
@@ -330,6 +330,10 @@
     }
     //reference JavaScript file for page
     echo "<script type='text/javascript' src='assets/scripts/script.js'></script>";
+    if($_SESSION["pageTaken"]==True) {
+        echo "<script type='text/javascript'>document.getElementById('pageerror').innerHTML='That page has already been taken, please choose another name.';</script>";
+        $_SESSION["pageTaken"]=False;
+    }
     echo "<p class='information'>&#169 thinkly, 2018</span>";
     echo "</body>";
     echo "</html>";

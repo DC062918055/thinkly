@@ -13,7 +13,7 @@
     //get entered name
     $page=$_POST["pagename"];
     //fetch page name
-    $query="SELECT * FROM pages WHERE name=$page";
+    $query="SELECT * FROM pages WHERE name='$page'";
     $result=$conn->query($query);
     //check page name is not in use
     if($result->num_rows==0) {
