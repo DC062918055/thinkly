@@ -61,8 +61,8 @@ function check(form) {
         var year=document.getElementById("year").value;
         var bio=document.getElementById("bio").value;
         var website=document.getElementById("website").value;
-        //if nickname over 255, alert user/end script
-        if(nickname.length>255) {
+        //if nickname over 25, alert user/end script
+        if(nickname.length>25) {
             document.getElementById("profileerror").innerHTML="That nickname is too long.";
             return false;
         }
@@ -84,8 +84,8 @@ function check(form) {
             }
         }
         //check they 30 day months, if not correct alert user/end script
-        else if(day>30&&month==4||month==6||month==9||month==11) {
-            document.getElementById("profileerror").innerHTML="Please enter a valid day.";
+        else if(day>30&&(month==4||month==6||month==9||month==11)) {
+            document.getElementById("profileerror").innerHTML="Please enter a valid month.";
             return false;
         }
         //if month out of range, alert user/end script
