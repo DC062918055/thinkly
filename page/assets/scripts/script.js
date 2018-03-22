@@ -99,6 +99,15 @@ function check(form) {
             return true;
         }
     }
+    else if(form=="update") {
+        //get description content
+        var content=document.getElementById("updatecontent").value;
+        //check length is not more than 240 characters
+        if(content.length>240) {
+            document.getElementById("updateerror").innerHTML="That description is too long!";
+            return false;
+        }
+    }
     else if(form=="delete") {
         //get value
         var pass=document.getElementById("passdelete").value;
