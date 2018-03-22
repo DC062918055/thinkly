@@ -97,7 +97,7 @@
         if($page=="welcome") {
             echo "<h1>Welcome to thinkly!</h1>";
             echo "<div class='column1'><h2>Getting Started</h2><p><span>thinkly</span> is complex. We get that - we designed it! But we believe the more complex a system, the more you can learn, and therefore the more you can do. So bear with us while you get started...trust us, it'll pay off.</p><ul><li><a href='/thinkly/profile/'>find a user</a></li><li><a href='/thinkly/profile/?u=$username'>create your profile</a></li><li><a href='/thinkly/page'>find a page</a></li><li><a href='/thinkly/page'>create a page</a></li></ul><p>Or, you can do none of these things, and just have a browse. Why not have a look at what's trending, to your right?</p></div>";
-            echo "<div class='column2'><h2>Discover</h2><div class='newfeed'><hr>";
+            echo "<div class='column2'><h2>Discover</h2><div class='newsfeed'><hr>";
             //select all recent posts
             $query="SELECT * FROM posts ORDER BY posted DESC LIMIT 50";
             $result=$conn->query($query);
