@@ -2,6 +2,7 @@ body {
     background-image: url('/thinkly/assets/background.svg');
     background-size: cover;
 }
+/* scrollbar style for sections */
 div::-webkit-scrollbar {
     width: 1em;
 }
@@ -253,6 +254,7 @@ select {
 #search {
     width: 100%;
 }
+/* placeholder text style */
 .singleregister::-webkit-input-placeholder {
 	 color: #FFFFFF;
 }

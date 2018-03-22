@@ -209,6 +209,7 @@ li {
 #search {
     width: 100%;
 }
+/* placeholder text style */
 .singleregister::-webkit-input-placeholder {
 	 color: #FFFFFF;
 }

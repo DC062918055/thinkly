@@ -2,6 +2,7 @@ body {
     background-image: url('background.svg');
     background-size: cover;
 }
+/* scrollbar style for sections */
 div::-webkit-scrollbar {
     width: 1em;
 }
@@ -138,6 +139,7 @@ a:hover {
   	color: #FFFFFF;
   	font-size: 1em;
 }
+/* placeholder text style */
 .loginField::-webkit-input-placeholder {
 	 color: #FFFFFF;
 }
